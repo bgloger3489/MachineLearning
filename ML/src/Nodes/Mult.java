@@ -8,16 +8,8 @@ public class Mult extends Node{
 		super(a, b);
 	}
 	
-	public int[] fowardPass() {
-		int[] temp = new int[a.vals.length];
+	public Matrix fowardPass() {
 		
-		for(int i = 0; i < a.vals.length; i++) {
-			temp[i] = a.vals[i] * b.vals[i];
-		}
-		
-		this.newVals = temp;
-		
-		return temp;
 	}
 	
 	public String tos() {

@@ -1,19 +1,19 @@
 package Nodes;
 
+import Main.Matrix;
 import Main.Tensor;
 
 public class Node {
 	public Tensor a;
 	public Tensor b;
-	public int[] newVals;
+	
 	
 	public Node(Tensor a, Tensor b) {
 		this.a = a;
 		this.b = b;
 	}
 
-	public int[] fowardPass() {
-		this.newVals = null;
+	public Matrix fowardPass() {
 		return null;
 	}
 	
@@ -21,11 +21,19 @@ public class Node {
 		return "()";
 	}
 	
-	public int[] grada() {
-		return b.vals;
+	public Matrix grada() {
+		return b.matrix;
 	}
 	
-	public int[] gradb() {
-		return a.vals;
+	public Matrix gradb() {
+		return a.matrix;
+	}
+
+	public void backprop() {
+		a.grad = b.matrix;
+		b.grad = a.matrix;
+		a.backprop();
+		b.backprop();
+		
 	}
 }
