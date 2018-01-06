@@ -1,5 +1,6 @@
 package Nodes;
 
+import Main.Matrix;
 import Main.Tensor;
 
 public class Mult extends Node{
@@ -9,7 +10,7 @@ public class Mult extends Node{
 	}
 	
 	public Matrix fowardPass() {
-		
+		return Matrix.multiplyMatricies(a.matrix, b.matrix);
 	}
 	
 	public String tos() {
