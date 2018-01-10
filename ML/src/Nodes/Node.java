@@ -6,6 +6,7 @@ import Main.Tensor;
 public class Node {
 	public Tensor a;
 	public Tensor b;
+	//public Matrix grad;
 	
 	
 	public Node(Tensor a, Tensor b) {
@@ -20,20 +21,9 @@ public class Node {
 	public String tos() {
 		return "()";
 	}
-	
-	public Matrix grada() {
-		return b.matrix;
-	}
-	
-	public Matrix gradb() {
-		return a.matrix;
-	}
 
-	public void backprop() {
-		a.grad = b.matrix;
-		b.grad = a.matrix;
-		a.backprop();
-		b.backprop();
-		
+	//everytime you backprop,  check goal
+	public Matrix backprop(Tensor goal) {
+		return null;
 	}
 }

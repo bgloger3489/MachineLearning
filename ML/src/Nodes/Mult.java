@@ -16,4 +16,14 @@ public class Mult extends Node{
 	public String tos() {
 		return "(*)";
 	}
+	
+	public Matrix backprop(Tensor goal) {
+		if(a == goal) 
+			return b.matrix;
+		
+		if(b == goal)
+			return a.matrix;
+		
+		return Matrix.addMatrix(a.backprop(goal), b.backprop(goal));
+	}
 }

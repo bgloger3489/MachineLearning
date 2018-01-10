@@ -22,9 +22,24 @@ public class Tensor {
 		this.creator = creator; 
 	}
 	
-	public void backprop() {
-		if(creator != null) {
-			creator.backprop();
+	public static void updateTensors(Tensor[] n) {
+		for(int i = 0; i < n.length; i++) {
+			//tempMain.p("z"+(i+1));
+			n[i].updateTensor();
 		}
 	}
+	
+	public void updateTensor() {
+		this.matrix = creator.fowardPass();
+		//tempMain.prarr(this.matrix.vals);
+	}
+	
+	public Matrix backprop(Tensor goal) {
+		
+		if(creator == null) {
+			return Matrix.zeros(tempMain.EMERGENCY_LENGTH);
+		}
+		return creator.backprop(goal);
+	}
+	
 }

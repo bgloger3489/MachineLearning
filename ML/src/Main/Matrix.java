@@ -4,6 +4,7 @@ public class Matrix {
 
 	public double[][] vals;
 	
+	
 	public Matrix(double[][] d) {
 		vals = d;
 	}
@@ -39,7 +40,7 @@ public class Matrix {
 	 * **/
 	public static Matrix multiplyMatricies(Matrix m1, Matrix m2) {
 		
-		if(m1.vals.length != m2.vals[0].length) {
+		if(m1.vals[0].length != m2.vals.length) {
 			tempMain.p("INVALID INPUT1");
 		}
 
@@ -57,10 +58,84 @@ public class Matrix {
 		return new Matrix(temp);
 	}
 	
-	public static Matrix addMatricies(Matrix m1, Matrix m2) {
-		if(!m1.getShape().equals(m2.getShape())) {
-			tempMain.p("INVALID INPUT2");
+	public static Matrix raisePowerMatrix(Matrix m1, double power) {
+		//m1.getShape() is [length][1]
+		double[][] temp = new double[m1.vals.length][1];
+		
+		for(int i = 0;  i < m1.vals.length; i++) {
+			temp[i][0] = java.lang.Math.pow((m1.vals[i][0]), power);
 		}
 		
+		return new Matrix(temp);
+	}
+	
+	public static Matrix addMatrix(Matrix m1, Matrix m2) {
+		if(m1.getShape().equals(m2.getShape())) {
+			tempMain.p("INVALID IMPUT3");
+		}
+		
+		double[][] temp = new double[m1.vals.length][1];
+		
+		for(int i = 0;  i < m1.vals.length; i++) {
+			temp[i][0] = m1.vals[i][0] + m2.vals[i%m2.vals.length][0];
+		}
+		
+		return new Matrix(temp);
+	}
+	
+	public static Matrix addCollapseMatrix(Matrix m1) {
+		double[][] temp = new double[1][1];
+		
+		for(int i = 0; i < m1.vals.length; i++) {
+			temp[0][0] += m1.vals[i][0];
+		}
+		
+		return new Matrix(temp);
+	}
+
+	public static Matrix subMatrix(Matrix m1, Matrix m2) {
+		//m1 - m2
+		
+		if(m1.getShape().equals(m2.getShape())) {
+			tempMain.p("INVALID IMPUT4");
+		}
+		
+		double[][] temp = new double[m1.vals.length][1];
+		
+		for(int i = 0;  i < m1.vals.length; i++) {
+			temp[i][0] = m1.vals[i][0] - m2.vals[i%m2.vals.length][0];
+		}
+		
+		return new Matrix(temp);
+	}
+	
+	public static Matrix T(Matrix m) {
+		double[][] temp = new double[m.getShape()[1]][m.getShape()[0]];
+		
+		for(int i = 0; i < m.getShape()[0]; i++) {
+			for(int j = 0; j < m.getShape()[1]; j++) {
+				temp[j][i] = m.vals[i][j];
+			}
+		}
+		
+		return new Matrix(temp);
+	}
+	
+	public static Matrix ones(int n) {
+		double[][] temp = new double[n][1];
+		for(int i = 0; i < n; i++) {
+			temp[i][0] = 1.0;
+		}
+		
+		return new Matrix(temp);
+	}
+	
+	public static Matrix zeros(int n) {
+		double[][] temp = new double[n][1];
+		for(int i = 0; i < n; i++) {
+			temp[i][0] = 0.0;
+		}
+		
+		return new Matrix(temp);
 	}
 }
