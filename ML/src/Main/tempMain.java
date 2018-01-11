@@ -14,12 +14,21 @@ public class tempMain {
 	
 	public static void main(String[] args) {
 		LEARNING_RATE = 0.001;
-		test1();
+		test2();
 		
 	}
 	
 	public static void test2() {
+		double[][] temp1 = {{0},{1},{2},{3},{4},{5}};
+		Tensor X = new Tensor(new Matrix(temp1));
+		EMERGENCY_LENGTH = temp1.length;
 		
+		//double[][] temp2 = {{2},{5},{8},{11},{14},{17}};//{{1},{6},{7},{13},{11},{16}};
+		double[][] temp2 = {{1},{6},{7},{13},{11},{16}};
+		Tensor Y = new Tensor(new Matrix(temp2));
+		Y.matrix = Y.T();
+		Node n1 = new Mult(X,Y);
+		Tensor z1 = new Tensor(n1);
 	}
 	
 	public static void test1() {

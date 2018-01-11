@@ -109,12 +109,12 @@ public class Matrix {
 		return new Matrix(temp);
 	}
 	
-	public static Matrix T(Matrix m) {
-		double[][] temp = new double[m.getShape()[1]][m.getShape()[0]];
+	public Matrix T() {
+		double[][] temp = new double[this.getShape()[1]][this.getShape()[0]];
 		
-		for(int i = 0; i < m.getShape()[0]; i++) {
-			for(int j = 0; j < m.getShape()[1]; j++) {
-				temp[j][i] = m.vals[i][j];
+		for(int i = 0; i < this.getShape()[0]; i++) {
+			for(int j = 0; j < this.getShape()[1]; j++) {
+				temp[j][i] = this.vals[i][j];
 			}
 		}
 		

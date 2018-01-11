@@ -23,7 +23,7 @@ public class Exponent extends Node{
 		
 		Matrix temp = Matrix.multiplyMatricies(Matrix.raisePowerMatrix(a.matrix, power-1), new Matrix(m2));
 		
-		return Matrix.multiplyMatricies(Matrix.T(temp), a.backprop(goal));
+		return Matrix.multiplyMatricies(temp.T(), a.backprop(goal));
 		
 	}
 	

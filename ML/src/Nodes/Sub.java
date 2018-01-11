@@ -16,12 +16,15 @@ public class Sub extends Node{
 	
 	//ALWAYS a - b !
 	public Matrix backprop(Tensor goal) {
-		if(a == goal) 
-			return Matrix.subMatrix(Matrix.ones(b.matrix.vals.length), b.backprop(goal));
 		
-		if(b == goal)
-			return Matrix.subMatrix(a.backprop(goal), Matrix.ones(a.matrix.vals.length));
-		
+		if(a == goal) {
+			double[][] temp = {{1}};
+			return Matrix.subMatrix(new Matrix(temp), b.backprop(goal));
+		}
+		if(b == goal) {
+			double[][] temp = {{1}};
+			return Matrix.subMatrix(a.backprop(goal), new Matrix(temp));
+		}
 		//tempMain.prarr(a.backprop(goal).vals);
 		//tempMain.prarr(b.backprop(goal).vals);
 		
