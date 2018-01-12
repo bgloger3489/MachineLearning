@@ -50,7 +50,7 @@ public class Matrix {
 			for(int j = 0; j < m2.vals.length; j++) { //m2 == m1[0]    loop through m1 going across OR m2 going down
 				for(int t = 0; t < m2.vals[0].length; t++) { //loop through m2 going across
 					temp[i][t] += m1.vals[i][j]*m2.vals[j][t];
-				
+					tempMain.p("" +m1.vals[i][j]*m2.vals[j][t] +" @i="+i+" j="+j +" t="+t);
 				}
 			}
 		}
@@ -70,14 +70,16 @@ public class Matrix {
 	}
 	
 	public static Matrix addMatrix(Matrix m1, Matrix m2) {
-		if(m1.getShape().equals(m2.getShape())) {
+		if(!(m1.getShape()[1]%m2.getShape()[1] == 0)) {
 			tempMain.p("INVALID IMPUT3");
 		}
 		
-		double[][] temp = new double[m1.vals.length][1];
+		double[][] temp = new double[m1.vals.length][m1.vals[0].length];
 		
 		for(int i = 0;  i < m1.vals.length; i++) {
-			temp[i][0] = m1.vals[i][0] + m2.vals[i%m2.vals.length][0];
+			for(int j = 0; j < m1.vals[0].length; j++) {
+				temp[i][j] = m1.vals[i][j] + m2.vals[i%m2.vals.length][j%m2.vals[0].length];
+			}
 		}
 		
 		return new Matrix(temp);
