@@ -37,7 +37,10 @@ public class Tensor {
 	public Matrix backprop(Tensor goal) {
 		
 		if(creator == null) {
-			return Matrix.zeros(tempMain.EMERGENCY_LENGTH);
+			//return Matrix.zeros(tempMain.EMERGENCY_LENGTH);
+			
+			double[][] temp = {{0}};
+			return new Matrix(temp);
 		}
 		return creator.backprop(goal);
 	}

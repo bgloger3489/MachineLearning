@@ -96,14 +96,16 @@ public class Matrix {
 	public static Matrix subMatrix(Matrix m1, Matrix m2) {
 		//m1 - m2
 		
-		if(m1.getShape().equals(m2.getShape())) {
+		if(!(m1.getShape()[1]%m2.getShape()[1] == 0)) {
 			tempMain.p("INVALID IMPUT4");
 		}
 		
-		double[][] temp = new double[m1.vals.length][1];
+		double[][] temp = new double[m1.vals.length][m1.vals[0].length];
 		
 		for(int i = 0;  i < m1.vals.length; i++) {
-			temp[i][0] = m1.vals[i][0] - m2.vals[i%m2.vals.length][0];
+			for(int j = 0; j < m1.vals[0].length; j++) {
+				temp[i][j] = m1.vals[i][j] - m2.vals[i%m2.vals.length][j%m2.vals[0].length];
+			}
 		}
 		
 		return new Matrix(temp);
@@ -138,4 +140,5 @@ public class Matrix {
 		
 		return new Matrix(temp);
 	}
+	
 }

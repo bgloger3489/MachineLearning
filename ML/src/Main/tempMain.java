@@ -19,16 +19,27 @@ public class tempMain {
 	}
 	
 	public static void test2() {
-		double[][] temp1 = {{0},{1},{2},{3},{4},{5}};
+		double[][] temp1 = {{0},{1},{2}};
 		Tensor X = new Tensor(new Matrix(temp1));
 		EMERGENCY_LENGTH = temp1.length;
 		
 		//double[][] temp2 = {{2},{5},{8},{11},{14},{17}};//{{1},{6},{7},{13},{11},{16}};
-		double[][] temp2 = {{1},{6},{7},{13},{11},{16}};
+		double[][] temp2 = {{1},{6},{7}};
 		Tensor Y = new Tensor(new Matrix(temp2));
-		Y.matrix = Y.T();
+		Y.matrix = Y.matrix.T();
 		Node n1 = new Mult(X,Y);
 		Tensor z1 = new Tensor(n1);
+		
+		double[][] temp3 = {{2.0, 4.0, 3.0},{2.0, 4.0, 3.0},{2.0, 4.0, 3.0}};
+		Tensor b = new Tensor(new Matrix(temp3));
+		
+		Node n2 = new Sub(z1,b);
+		Tensor z2 = new Tensor(n2);
+		
+		prarr(z2.matrix.vals);
+	
+		prarr(z2.backprop(X).vals);
+	
 	}
 	
 	public static void test1() {
