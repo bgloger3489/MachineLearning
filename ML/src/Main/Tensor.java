@@ -39,7 +39,10 @@ public class Tensor {
 		if(creator == null) {
 			//return Matrix.zeros(tempMain.EMERGENCY_LENGTH);
 			
-			double[][] temp = {{0}};
+			//double[][] temp = {{0}};
+			//aASDASDASDASDASDASD
+			double[][] temp = new double[this.matrix.getShape()[0]][this.matrix.getShape()[1]];
+			
 			return new Matrix(temp);
 		}
 		return creator.backprop(goal);

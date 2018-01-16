@@ -50,7 +50,7 @@ public class Matrix {
 			for(int j = 0; j < m2.vals.length; j++) { //m2 == m1[0]    loop through m1 going across OR m2 going down
 				for(int t = 0; t < m2.vals[0].length; t++) { //loop through m2 going across
 					temp[i][t] += m1.vals[i][j]*m2.vals[j][t];
-					tempMain.p("" +m1.vals[i][j]*m2.vals[j][t] +" @i="+i+" j="+j +" t="+t);
+					//tempMain.p("" +m1.vals[i][j]*m2.vals[j][t] +" @i="+i+" j="+j +" t="+t);
 				}
 			}
 		}

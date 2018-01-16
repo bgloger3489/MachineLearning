@@ -1,6 +1,6 @@
 package Main;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 
 import org.knowm.xchart.SwingWrapper;
@@ -14,6 +14,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
+
 public class ChartingTest implements ExampleChart<XYChart>{
 	public static void main(String[] args) {
 		 
@@ -21,12 +22,12 @@ public class ChartingTest implements ExampleChart<XYChart>{
 	    //XYChart chart = exampleChart.getChart();
 	    //new SwingWrapper<XYChart>(chart).displayChart();
 		
-		ExampleChart<XYChart> f = new ChartingTest();
-	    XYChart chart = f.getChart();
+		ChartingTest f = new ChartingTest();
+	    XYChart chart = f.gettChart();
 	    new SwingWrapper<XYChart>(chart).displayChart();
 	  }
 	 
-	  public XYChart getChart() {
+	  public XYChart gettChart(double[][] xxData,double[][] slope, double[][] yint, double[][] yyData) {
 	 
 	    // Create Chart
 	    XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
@@ -36,11 +37,11 @@ public class ChartingTest implements ExampleChart<XYChart>{
 	    chart.getStyler().setXAxisTickMarkSpacingHint(100);
 	    
 	    // Series
-	    List<Integer> xData = new ArrayList<Integer>();
-	    List<Integer> y1Data = new ArrayList<Integer>();
-	    for (int i = 0; i < 20; i++) {
-	      xData.add(i);
-	      y1Data.add(3*i+2);
+	    List<Double> xData = new ArrayList<Double>();
+	    List<Double> y1Data = new ArrayList<Double>();
+	    for (int i = 0; i < xxData.length; i++) {
+	      xData.add(xxData[i][0]);
+	      y1Data.add(slope[0][0]*xxData[i][0] + yint[0][0]);
 	    }
 	    
 	    XYSeries series = chart.addSeries("Linee", xData, y1Data);
@@ -60,9 +61,9 @@ public class ChartingTest implements ExampleChart<XYChart>{
 	    
 	    
 	    // Series
-	    List<Integer> y2Data = new ArrayList<Integer>();
-	    for (int i = 0; i < 20; i++) {
-	      y2Data.add(5*i+2);
+	    List<Double> y2Data = new ArrayList<Double>();
+	    for (int i = 0; i < xxData.length; i++) {
+	      y2Data.add(yyData[i][0]);
 	    }
 	    
 	    series = chart.addSeries("scater", xData, y2Data);
@@ -80,4 +81,10 @@ public class ChartingTest implements ExampleChart<XYChart>{
 	    }
 	    return yData;
 	  }
+
+	@Override
+	public XYChart getChart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
