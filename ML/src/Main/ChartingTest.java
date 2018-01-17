@@ -22,6 +22,10 @@ public class ChartingTest implements ExampleChart<XYChart>{
 	    //XYChart chart = exampleChart.getChart();
 	    //new SwingWrapper<XYChart>(chart).displayChart();
 		
+		Scanner in = new Scanner
+		
+		
+		
 		ChartingTest f = new ChartingTest();
 	    XYChart chart = f.gettChart();
 	    new SwingWrapper<XYChart>(chart).displayChart();
