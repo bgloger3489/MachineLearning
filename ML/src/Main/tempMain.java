@@ -20,7 +20,7 @@ public class tempMain {
 	
 	public static void main(String[] args) {
 		LEARNING_RATE = 0.001;
-		test1();
+		test2();
 	}
 	
 	public static void test2() {
@@ -30,30 +30,48 @@ public class tempMain {
 		double[][] temp1 = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};//{{0},{1},{2}}; (3,4)
 		Tensor X = new Tensor(new Matrix(temp1));
 		EMERGENCY_LENGTH = temp1.length;
-				
-		double[][] temp2 = {{1},{2},{3}};//{{0},{1},{2}};   (1,3)
+			
+						// dog predictor, cat predictor//, pig predictor
+		double[][] temp2 = {{1,1,1},{2,2,2}};
 		Tensor m1 = new Tensor(new Matrix(temp2));
 				
 		Node n1 = new Mult(X,m1);
 		Tensor z1 = new Tensor(n1);		
-				
 		
+		//should be an array of predicitons
+		// dog prediction, cat prediction
+		// {.50, .60}
+		// {.30, .90}
+		// {.10, .20}
+		// {.90, ,20}
 		
-		double[][] temp3 = {{10},{10},{10},{10}};//{{0},{1},{2}};
+		prarr(z1.matrix.vals);
+		double[][] temp3 = {{10},{20}};//{{0},{1},{2}};
 		Tensor b1 = new Tensor(new Matrix(temp3));
-				
+			
+		
 		Node n2 = new Add(z1,b1);
 		Tensor z2 = new Tensor(n2);
-		prarr(z1.matrix.vals);
-		//--------
-		double[][] temp4 = {};
-		Tensor m2 = new Tensor(new Matrix(temp4));
-		Tensor b2 = new Tensor(new Matrix(temp3));
-		
-		//Node n3 = new Mult(z2, m2)
 		
 		
-		//prarr(z1.matrix.vals);
+		p("");
+		prarr(z2.matrix.vals);
+		//predictions for each {{1},{2},{0},{1}}
+
+						// dog, cat, pig, pig
+		double[][] temp4 = {{1},{0},{2},{2}};
+		Tensor Y = new Tensor(new Matrix (temp4));
+		//make a new Y tensor everytime you forward pass??? so you can easily subtract
+		//new Tensor -> fill it with the correct answer in all slots, then make the correct one (-margin)
+		
+		//
+		//double[][] temp5 = fill{{},{},{}}
+		
+		
+		//SumMax
+		
+		
+		String[] YLabels = {"cat","dog","pig"};
 	}
 	
 	public static void test1() {
@@ -66,7 +84,7 @@ public class tempMain {
 		EMERGENCY_LENGTH = temp1.length;
 		
 		//double[][] temp2 = {{2},{5},{8},{11},{14},{17}};//{{1},{6},{7},{13},{11},{16}};
-		double[][] temp2 = {{1},{6},{7},{13},{11},{16}};
+		double[][] temp2 = {{1},{6},{7},{13},{11},{17}};
 		Tensor Y = new Tensor(new Matrix(temp2));
 		
 		double[][] temp3 = {{-10}};
@@ -103,13 +121,20 @@ public class tempMain {
 		double gradb;
 		double prevLoss = z5.matrix.vals[0][0];
 		for(int i = 0; i < 10000; i++) {
+			
 			prevLoss = z5.matrix.vals[0][0];
 			gradm = z5.backprop(m).vals[0][0];
 			gradb = z5.backprop(b).vals[0][0];
 			
-			p("Asd");
-			p("m:"+m.matrix.vals[0][0]);
-			p("b':"+b.matrix.vals[0][0]);
+			if(i%100 == 0) {
+				System.out.println(i);
+				p("m:"+m.matrix.vals[0][0]);
+				p("b':"+b.matrix.vals[0][0]);
+				p("----------------------------");
+				ChartingTest f = new ChartingTest();
+			    XYChart chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
+			    new SwingWrapper<XYChart>(chart).displayChart();
+			}
 			
 			double[][] newM = {{(m.matrix.vals[0][0] - gradm *LEARNING_RATE)}};
 			m.matrix = new Matrix(newM);
@@ -124,10 +149,13 @@ public class tempMain {
 			if(prevLoss <= z5.matrix.vals[0][0]) {
 				break;
 			}
-			p("----------------------------");
+			
 			
 			
 		}
+		System.out.println("final:");
+		p("m:"+m.matrix.vals[0][0]);
+		p("b':"+b.matrix.vals[0][0]);
 		
 		ChartingTest f = new ChartingTest();
 	    XYChart chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
