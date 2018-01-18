@@ -33,7 +33,7 @@ public class tempMain {
 			
 						// dog predictor, cat predictor//, pig predictor
 		double[][] temp2 = {{1,1,1},{2,2,2}};
-		Tensor m1 = new Tensor(new Matrix(temp2));
+		Tensor m1 = new Tensor((new Matrix(temp2)).T());
 				
 		Node n1 = new Mult(X,m1);
 		Tensor z1 = new Tensor(n1);		
