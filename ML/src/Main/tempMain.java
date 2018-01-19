@@ -20,18 +20,107 @@ public class tempMain {
 	
 	public static void main(String[] args) {
 		LEARNING_RATE = 0.001;
-		test2();
+		test3();
 	}
+	
+	//OR JUST FEED IN 1 PICTURE AT A TIME
+	public static void test3() {
+		//PRE FIX .T()s !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//change to double.() -> new Matrix(double.T())
+		
+		double[][] allX = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
+		
+		
+		//ONE PICTURE temp1 = allX[currentPictureIndex];
+		double[][] temp1 = {{1,2,3}};
+		Tensor X = new Tensor(new Matrix(temp1));
+		EMERGENCY_LENGTH = temp1.length;
+			
+						// dog predictor, cat predictor, pig predictor
+		double[][] temp2 = {{1,1,1},{2,2,2}, {3,3,3}};
+		Tensor m1 = new Tensor((new Matrix(temp2)).T());
+				
+		Node n1 = new Mult(X,m1);
+		Tensor z1 = new Tensor(n1);		
+		
+		//should be an array of predicitons
+		// dog prediction, cat prediction
+		// {.50, .60}
+
+		
+		prarr(z1.matrix.vals);
+		double[][] temp3 = {{10},{20},{30}};//{{0},{1},{2}};
+		Tensor b1 = new Tensor(new Matrix(temp3));
+			
+		
+		Node n2 = new Add(z1,b1);
+		Tensor z2 = new Tensor(n2);
+		
+		
+		p("");
+		prarr(z2.matrix.vals);
+
+		//ONE AT A TIME
+						// dog
+		double[] allY = {1,0,2,2};
+		//Tensor Y = new Tensor(new Matrix (temp4)); // THIS IS UNESSESARY
+		
+		//make a new Y tensor everytime you forward pass??? so you can easily subtract
+		//new Tensor -> fill it with the correct answer in all slots, then make the correct one (-margin)
+		
+		//double[][] temp3 = new double[3][1]
+		//
+		// correctPred = z2.matrix.vals[0][allY[currentPictureIndex]]
+		//
+		// for(int i = 0; i< z2.matrix.vals.length; i++){
+		// 		if(i == allY[currentPictureIndex])
+		//			temp4[i][0] = margin; //will eventually be -margin when put into Sub
+		//		else
+		//			temp4[i][0] = correctPred-margin; //make sure this correctedPred needs to not be update in grad descent
+		//
+		// Tensor correct = new Tensor(temp4);
+		//
+		// Node n3 = new Sub(z2, correct);
+		// Tensor z3 = new Tensor(n3);
+		//
+		// 
+		// Node n4 = SumMax(z3)
+		// Tensor z4 = new Tensor(n4
+		//
+		//
+		//
+		//	for(int currentPictureIndex = 0; currentPictureIndex< allX.lengthl i++){ 
+		//
+		//
+		// 		PASS IN NEXT PICTURE:
+		//			//temp1 = allX[currentPictureIndex];
+		//			double[][] temp1 = {{4,5,6}};
+		//			X = new Tensor(new Matrix(temp1));
+		//			EMERGENCY_LENGTH = temp1.length;
+		//
+		//			
+		//
+		// 		BACKPROP:
+		// 		newm1 = z4.backprop(m1)
+		// 		newb1 = z4.backprop(b1)
+		//
+		
+		
+		String[] YLabels = {"cat","dog","pig"};
+	}
+	
+	
 	
 	public static void test2() {
 		//y = (X*M1+B1)M2 + b2
 		
+		//PRE FIX .T()s !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		double[][] temp1 = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};//{{0},{1},{2}}; (3,4)
+		double[][] temp1 = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
 		Tensor X = new Tensor(new Matrix(temp1));
 		EMERGENCY_LENGTH = temp1.length;
 			
-						// dog predictor, cat predictor//, pig predictor
+						// dog predictor, cat predictor
 		double[][] temp2 = {{1,1,1},{2,2,2}};
 		Tensor m1 = new Tensor((new Matrix(temp2)).T());
 				
@@ -58,20 +147,20 @@ public class tempMain {
 		prarr(z2.matrix.vals);
 		//predictions for each {{1},{2},{0},{1}}
 
-						// dog, cat, pig, pig
-		double[][] temp4 = {{1},{0},{2},{2}};
+						// dog, cat, dog, dog
+		double[][] temp4 = {{1},{0},{1},{1}};
 		Tensor Y = new Tensor(new Matrix (temp4));
 		//make a new Y tensor everytime you forward pass??? so you can easily subtract
 		//new Tensor -> fill it with the correct answer in all slots, then make the correct one (-margin)
 		
 		//
-		//double[][] temp5 = fill{{},{},{}}
+		//double[][] temp5 = fill{{z1[0][1]},{z1[1][0]},{z1[2][1]},{z1[3][1]}}
 		
 		
 		//SumMax
 		
 		
-		String[] YLabels = {"cat","dog","pig"};
+		String[] YLabels = {"cat","dog"};
 	}
 	
 	public static void test1() {
