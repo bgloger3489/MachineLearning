@@ -38,7 +38,7 @@ public class tempMain {
 			
 						// dog predictor, cat predictor, pig predictor
 		double[][] temp2 = {{1,1,1},{2,2,2}, {3,3,3}};
-		Tensor m1 = new Tensor((new Matrix(temp2)).T());
+		Tensor m1 = new Tensor(new Matrix(T(temp2)));
 				
 		Node n1 = new Mult(X,m1);
 		Tensor z1 = new Tensor(n1);		
@@ -252,6 +252,10 @@ public class tempMain {
 		
 	}
 	
+	
+	
+	//Utility Functions
+	
 	public static void p(String s) {
 		System.out.println(s);
 	}
@@ -268,5 +272,17 @@ public class tempMain {
 			else
 				p("");
 		}
+	}
+	
+	public static double[][] T(double[][] asd){
+		double[][] temp = new double[asd[0].length][asd.length];
+		
+		for(int i = 0; i < asd.length; i++) {
+			for(int j = 0; j < asd[0].length; j++) {
+				temp[j][i] = asd[i][j];
+			}
+		}
+		
+		return temp;
 	}
 }
