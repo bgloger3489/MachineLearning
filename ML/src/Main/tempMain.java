@@ -14,12 +14,15 @@ import Nodes.Sub;
 
 public class tempMain {
 	
+	public static  double MARGIN;
 	public static int EMERGENCY_LENGTH;
 	public static double LEARNING_RATE;
-	
+	public static int NUM_CLASSIFICATIONS;
+	public static int NUM_PICTURES;
 	
 	public static void main(String[] args) {
 		LEARNING_RATE = 0.001;
+		MARGIN = 10;
 		test3();
 	}
 	
@@ -29,17 +32,18 @@ public class tempMain {
 		//change to double.() -> new Matrix(double.T())
 		
 		double[][] allX = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
-		
+		NUM_PICTURES = allX.length;
 		
 		//ONE PICTURE temp1 = allX[currentPictureIndex];
-		double[][] temp1 = {{1,2,3}};
+		double[][] temp1 = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
 		Tensor X = new Tensor(new Matrix(temp1));
 		EMERGENCY_LENGTH = temp1.length;
 			
 						// dog predictor, cat predictor, pig predictor
 		double[][] temp2 = {{1,1,1},{2,2,2}, {3,3,3}};
 		Tensor m1 = new Tensor(new Matrix(T(temp2)));
-				
+		NUM_CLASSIFICATIONS = temp2[0].length;
+		
 		Node n1 = new Mult(X,m1);
 		Tensor z1 = new Tensor(n1);		
 		
@@ -49,7 +53,7 @@ public class tempMain {
 
 		
 		prarr(z1.matrix.vals);
-		double[][] temp3 = {{10},{20},{30}};//{{0},{1},{2}};
+		double[][] temp3 = {{10,20,30}};//{{0},{1},{2}};
 		Tensor b1 = new Tensor(new Matrix(temp3));
 			
 		
@@ -59,51 +63,83 @@ public class tempMain {
 		
 		p("");
 		prarr(z2.matrix.vals);
-
+		p("");
+		prarr(z2.backprop(m1).vals);
 		//ONE AT A TIME
 						// dog
-		double[] allY = {1,0,2,2};
+		
 		//Tensor Y = new Tensor(new Matrix (temp4)); // THIS IS UNESSESARY
+		
+		//{ 16.0, *32.0*, 48.0, }
+		//{*25.0*, 50.0,  75.0, }
+		//{ 34.0,  68.0, *102.0*, }
+		//{ 43.0,  86.0, *129.0*, }
+
+		double[] allY = {1,0,2,2};
+		//
+		//compareY = {
+		//{32, lambda, 32}, 
+		//{lambda, 25, 25}, 
+		//{102, 012, lambda}, 
+		//{129, 129, lambda}}
+		
+		//compareY.backprop(Tensor a)
+		// ->>> returns picked out gradient{
+		//{z2.grad[0][1], 0, z2.grad[0][1]},
+		//{0, z2.grad[1][0], z2.grad[1][0]},
+		//{z2.grad[2][2], z2.grad[2][2], 0},
+		//{z2.grad[3][2], z2.grad[3][2], 0}}
+		
+		
+		//
+		//CONSTRUCTOR:
+		//createSpecialTensor(double[] allY, Tensor whereToFind){
+		//  **Creates compareY shown above**
+		//	double[][] emptyArray = new double[numClassifications][allY.length]
+		//
+		//	for(int i = 0; i < allY.length; i++){
+		//		
+		//		for(int j = 0; j < emptyGradArray.lentj; j ++){
+		//			if(j == allY[i])
+		//				emptyArray[i][j] = lambda;
+		//			else
+		//				emptyArray[i][j] = whereToFind.matrix.vals[i][allY[i]];
+		//		}
+		//	}
+		//
+		//
+		//	super(new Matrix(emptyArray));
+		//	**stores allY & wherToFind, for when .backprop is called
+		//	this.allY = allY;
+		//	this.whereToFind = whereToFind
+		//	}
+		//
+		//
+		//
+		//
+		//	@overide
+		//	backprop(Tensor goal){
+		//
+		//	double[][] emptyGradArray = new double[numClassifiers][allY.length] OR [emptyArray.length][emptyArray[0].length]
+		//	
+		//	//**Creates instruction array for how to calculate gradient as shown above (Where to find them -> z2 -> z2.backprop)
+		//	
+		//	z2Grad = whereToFind.backprop(goal)
+		//
+		//	for(int i = 0; i < allY.length; i++){
+		//		
+		//		for(int j = 0; j < numClassifications; j ++){
+		//			if(j == allY[i])
+		//				emptyGradArray[i][j] = 0;
+		//			else
+		//				emptyGradArray[i][j] = z2Grad[i][allY[i]]
+		//		}
+		//	}
+		//	return emptyGradArray; 
+		//}
 		
 		//make a new Y tensor everytime you forward pass??? so you can easily subtract
 		//new Tensor -> fill it with the correct answer in all slots, then make the correct one (-margin)
-		
-		//double[][] temp3 = new double[3][1]
-		//
-		// correctPred = z2.matrix.vals[0][allY[currentPictureIndex]]
-		//
-		// for(int i = 0; i< z2.matrix.vals.length; i++){
-		// 		if(i == allY[currentPictureIndex])
-		//			temp4[i][0] = margin; //will eventually be -margin when put into Sub
-		//		else
-		//			temp4[i][0] = correctPred-margin; //make sure this correctedPred needs to not be update in grad descent
-		//
-		// Tensor correct = new Tensor(temp4);
-		//
-		// Node n3 = new Sub(z2, correct);
-		// Tensor z3 = new Tensor(n3);
-		//
-		// 
-		// Node n4 = SumMax(z3)
-		// Tensor z4 = new Tensor(n4
-		//
-		//
-		//
-		//	for(int currentPictureIndex = 0; currentPictureIndex< allX.lengthl i++){ 
-		//
-		//
-		// 		PASS IN NEXT PICTURE:
-		//			//temp1 = allX[currentPictureIndex];
-		//			double[][] temp1 = {{4,5,6}};
-		//			X = new Tensor(new Matrix(temp1));
-		//			EMERGENCY_LENGTH = temp1.length;
-		//
-		//			
-		//
-		// 		BACKPROP:
-		// 		newm1 = z4.backprop(m1)
-		// 		newb1 = z4.backprop(b1)
-		//
 		
 		
 		String[] YLabels = {"cat","dog","pig"};
