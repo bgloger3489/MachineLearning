@@ -10,6 +10,7 @@ import Nodes.AddSeq;
 import Nodes.Exponent;
 import Nodes.Mult;
 import Nodes.Node;
+import Nodes.SpecialNode;
 import Nodes.Sub;
 
 public class tempMain {
@@ -75,7 +76,14 @@ public class tempMain {
 		//{ 34.0,  68.0, *102.0*, }
 		//{ 43.0,  86.0, *129.0*, }
 
-		double[] allY = {1,0,2,2};
+		int[] allY = {1,0,2,2};
+		
+		Node specialLink = new SpecialNode(z2,  allY);
+		
+		Tensor Ycompare = new Tensor(specialLink);
+		p("");
+		prarr(Ycompare.matrix.vals);
+		
 		//
 		//compareY = {
 		//{32, lambda, 32}, 
