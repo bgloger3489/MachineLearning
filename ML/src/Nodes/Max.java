@@ -1,13 +1,52 @@
 package Nodes;
 
+import Main.Matrix;
 import Main.Tensor;
+import Main.tempMain;
 
 public class Max extends Node{
+	Tensor whereToFind;
+	
+	public Max(Tensor a) {
+		super(null, null);
+		this.whereToFind = a;
+	
+	}
+	
+	public Matrix fowardPass() {
+		double[][] emptyArray = new double[tempMain.NUM_PICTURES][tempMain.NUM_CLASSIFICATIONS];
+		
+		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
+			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){
+				if(whereToFind.matrix.vals[i][j] > 0)
+					emptyArray[i][j] = whereToFind.matrix.vals[i][j];
+				else
+					emptyArray[i][j] = 0;
+			}
+		}
+		return new Matrix(emptyArray);
+	}
+	
+	
+	
 
-	public Max(Tensor a, Tensor b) {
-		//b is a zero Tensor
-		super(a, b);
-		// TODO Auto-generated constructor stub
+	public Matrix backprop(Tensor goal){
+
+		double[][] emptyGradArray = new double[tempMain.NUM_PICTURES][tempMain.NUM_CLASSIFICATIONS];
+		//**Creates instruction array for how to calculate gradient as shown above (Where to find them -> z2 -> z2.backprop)
+				
+		double[][] z3Grad = whereToFind.backprop(goal).vals;
+	
+		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
+			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){
+				if(whereToFind.matrix.vals[i][j] > 0)
+					emptyGradArray[i][j] = z3Grad[i][j];
+				else
+					emptyGradArray[i][j] = 0;
+			}
+		}
+		
+		return new Matrix(emptyGradArray); 
 	}
 
 }

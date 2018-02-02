@@ -94,6 +94,18 @@ public class Matrix {
 		
 		return new Matrix(temp);
 	}
+	
+	public static Matrix addCollapseMatrixToRow(Matrix mat) {
+		double[][] temp = new double[1][mat.vals[0].length];
+		
+		for(int i = 0; i < mat.vals.length; i++) {
+			for(int j = 0; j < mat.vals[0].length; j++) {
+				temp[0][j] += mat.vals[i][j];
+			}
+		}
+		
+		return new Matrix(temp);
+	}
 
 	public static Matrix subMatrix(Matrix m1, Matrix m2) {
 		//m1 - m2

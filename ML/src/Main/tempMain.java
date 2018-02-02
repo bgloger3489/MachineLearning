@@ -7,7 +7,9 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 import Nodes.Add;
 import Nodes.AddSeq;
+import Nodes.AddToRow;
 import Nodes.Exponent;
+import Nodes.Max;
 import Nodes.Mult;
 import Nodes.Node;
 import Nodes.SpecialNode;
@@ -27,65 +29,10 @@ public class tempMain {
 		test3();
 	}
 	
-	//OR JUST FEED IN 1 PICTURE AT A TIME
-	public static void test3() {
-		//PRE FIX .T()s !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//change to double.() -> new Matrix(double.T())
-		
-		double[][] allX = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
-		NUM_PICTURES = allX.length;
-		
-		//ONE PICTURE temp1 = allX[currentPictureIndex];
-		double[][] temp1 = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
-		Tensor X = new Tensor(new Matrix(temp1));
-		EMERGENCY_LENGTH = temp1.length;
-			
-						// dog predictor, cat predictor, pig predictor
-		double[][] temp2 = {{1,1,1},{2,2,2}, {3,3,3}};
-		Tensor m1 = new Tensor(new Matrix(T(temp2)));
-		NUM_CLASSIFICATIONS = temp2[0].length;
-		
-		Node n1 = new Mult(X,m1);
-		Tensor z1 = new Tensor(n1);		
-		
-		//should be an array of predicitons
-		// dog prediction, cat prediction
-		// {.50, .60}
-
-		
-		prarr(z1.matrix.vals);
-		double[][] temp3 = {{10,20,30}};//{{0},{1},{2}};
-		Tensor b1 = new Tensor(new Matrix(temp3));
-			
-		
-		Node n2 = new Add(z1,b1);
-		Tensor z2 = new Tensor(n2);
-		
-		
-		p("");
-		prarr(z2.matrix.vals);
-		p("");
-		prarr(z2.backprop(m1).vals);
-		//ONE AT A TIME
-						// dog
-		
-		//Tensor Y = new Tensor(new Matrix (temp4)); // THIS IS UNESSESARY
-		
-		//{ 16.0, *32.0*, 48.0, }
-		//{*25.0*, 50.0,  75.0, }
-		//{ 34.0,  68.0, *102.0*, }
-		//{ 43.0,  86.0, *129.0*, }
-
-		int[] allY = {1,0,2,2};
-		
-		Node specialLink = new SpecialNode(z2,  allY);
-		
-		Tensor Ycompare = new Tensor(specialLink);
-		p("");
-		prarr(Ycompare.matrix.vals);
-		
-		//
-		//compareY = {
+	
+	/**
+	 * 
+	 * //compareY = {
 		//{32, lambda, 32}, 
 		//{lambda, 25, 25}, 
 		//{102, 012, lambda}, 
@@ -148,6 +95,93 @@ public class tempMain {
 		
 		//make a new Y tensor everytime you forward pass??? so you can easily subtract
 		//new Tensor -> fill it with the correct answer in all slots, then make the correct one (-margin)
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * */
+	
+	//OR JUST FEED IN 1 PICTURE AT A TIME
+	public static void test3() {
+		
+		double[][] allX = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
+		NUM_PICTURES = allX.length;
+		
+		//ONE PICTURE temp1 = allX[currentPictureIndex];
+		double[][] temp1 = {{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
+		Tensor X = new Tensor(new Matrix(temp1));
+		EMERGENCY_LENGTH = temp1.length;
+			
+						// dog predictor, cat predictor, pig predictor
+		double[][] temp2 = {{1,1,1},{2,2,2}, {3,3,3}};
+		Tensor m1 = new Tensor(new Matrix(T(temp2)));
+		NUM_CLASSIFICATIONS = temp2[0].length;
+		
+		Node n1 = new Mult(X,m1);
+		Tensor z1 = new Tensor(n1);		
+		
+		//should be an array of predicitons
+		// dog prediction, cat prediction
+		// {.50, .60}
+
+		
+		prarr(z1.matrix.vals);
+		double[][] temp3 = {{10,20,30}};//{{0},{1},{2}};
+		Tensor b1 = new Tensor(new Matrix(temp3));
+			
+		
+		Node n2 = new Add(z1,b1);
+		Tensor z2 = new Tensor(n2);
+		
+		
+		p("z2");
+		prarr(z2.matrix.vals);
+		
+		p("z2back");
+		prarr(z2.backprop(m1).vals);
+
+
+		int[] allY = {1,0,2,2};
+		
+		Node specialLink = new SpecialNode(z2,  allY);
+		
+		Tensor Ycompare = new Tensor(specialLink);
+		p("Ycompare");
+		prarr(Ycompare.matrix.vals);
+		
+		p("YcompareBack");
+		prarr(Ycompare.backprop(m1).vals);
+		
+		Node n3 = new Sub(z2, Ycompare);
+		Tensor z3 = new Tensor(n3);
+		
+		p("z3");
+		prarr(z3.matrix.vals);
+		
+		Node n4 = new Max(z3);
+		Tensor z4 = new Tensor(n4);
+		
+		p("z4:");
+		prarr(z4.matrix.vals);
+		
+		p("z4.back:");
+		prarr(z4.backprop(m1).vals);
+		
+		Node n5 = new AddToRow(z4);
+		Tensor z5 = new Tensor(n5);
+		
+		p("z5:");
+		prarr(z5.matrix.vals);
+		
+		p("z5.back:");
+		prarr(z5.backprop(m1).vals);
+		
+		
+		
 		
 		
 		String[] YLabels = {"cat","dog","pig"};

@@ -21,9 +21,9 @@ public class SpecialNode extends Node{
 		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
 			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){
 				if(j == allY[i])
-					emptyArray[i][j] = tempMain.MARGIN;
+					emptyArray[i][j] = whereToFind.matrix.vals[i][allY[i]];//0;//tempMain.MARGIN;
 				else
-					emptyArray[i][j] = whereToFind.matrix.vals[i][allY[i]];
+					emptyArray[i][j] = whereToFind.matrix.vals[i][allY[i]] - tempMain.MARGIN;
 			}
 		}
 		return new Matrix(emptyArray);
