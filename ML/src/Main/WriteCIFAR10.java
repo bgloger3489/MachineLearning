@@ -43,3 +43,4 @@ public class WriteCIFAR10 {
         outputStream.writeTo(new FileOutputStream("./out.bin"));
     }
 }
+
