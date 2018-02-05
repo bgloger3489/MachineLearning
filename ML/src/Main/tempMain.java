@@ -26,7 +26,7 @@ public class tempMain {
 	public static void main(String[] args) {
 		LEARNING_RATE = 0.001;
 		MARGIN = 10;
-		test3();
+		test1();
 	}
 	
 	
