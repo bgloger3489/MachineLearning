@@ -15,7 +15,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
-public class ChartingTest implements ExampleChart<XYChart>{
+public class ChartingTest {//implements ExampleChart<XYChart>{
 	public static void main(String[] args) {
 		 
 	    //ExampleChart<XYChart> exampleChart = new ThemeChart03();
@@ -86,7 +86,7 @@ public class ChartingTest implements ExampleChart<XYChart>{
 	    return yData;
 	  }
 
-	@Override
+	//@Override
 	public XYChart getChart() {
 		// TODO Auto-generated method stub
 		return null;
