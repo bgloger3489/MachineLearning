@@ -26,8 +26,8 @@ public class BETADemonstation {
 		//JFRAME FOR USER INPUT
 		JFrame f = new JFrame();
 	    
-		JTextField x = new JTextField("2,5,8,11,14", 30);
-		JTextField y = new JTextField("0,1,2,3,4", 30);
+		JTextField x = new JTextField("0,1,2,3,4", 30);
+		JTextField y = new JTextField("2,5,8,11,14", 30);
 		
 		double[][] temp1;
 		double[][] temp2;

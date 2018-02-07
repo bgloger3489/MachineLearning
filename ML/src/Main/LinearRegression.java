@@ -13,6 +13,7 @@ public class LinearRegression extends Thread{
 	
 	public static int EMERGENCY_LENGTH;
 	public static double LEARNING_RATE;
+	public static double MARGIN;
 	public double[][] temp1;
 	public double[][] temp2;
 	
@@ -27,7 +28,10 @@ public class LinearRegression extends Thread{
 	
 	public void run() {
 		
-		LEARNING_RATE = 0.001;
+		//hyper parameters
+		LEARNING_RATE = 0.01;
+		MARGIN = 1;
+		
 		
 		//double[][] temp1 = {{0},{1},{2},{3},{4},{5}};
 		Tensor X = new Tensor(new Matrix(temp1));
@@ -73,7 +77,7 @@ public class LinearRegression extends Thread{
 		
 		ChartingTest f = new ChartingTest();
 		
-		for(int i = 0; i < 10000; i++) {
+		for(int i = 0; i < 1000; i++) {
 			
 			prevLoss = z5.matrix.vals[0][0];
 			gradm = z5.backprop(m).vals[0][0];
@@ -82,7 +86,9 @@ public class LinearRegression extends Thread{
 			if(i%100 == 0) {
 				System.out.println(i);
 				p("m:"+m.matrix.vals[0][0]);
-				p("b':"+b.matrix.vals[0][0]);
+				p("b:"+b.matrix.vals[0][0]);
+				p("m':"+z5.backprop(m).vals[0][0]);
+				p("b':"+z5.backprop(b).vals[0][0]);
 				p("----------------------------");
 				//ChartingTest f = new ChartingTest();
 			    XYChart chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
@@ -99,7 +105,7 @@ public class LinearRegression extends Thread{
 			//p("b':"+b.matrix.vals[0][0]);
 			
 			Tensor.updateTensors(tenArr);
-			if(prevLoss <= z5.matrix.vals[0][0]) {
+			if(prevLoss + MARGIN <= z5.matrix.vals[0][0]) {
 				break;
 			}
 			
