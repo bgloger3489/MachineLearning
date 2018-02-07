@@ -25,12 +25,12 @@ public class ReadCIFAR10 {
 	    byte[] b = new byte[3073*desiredImage];
 	    inputStream.read(b);
 
-	    
+	    	
 	    //
+	   // byte temp = b[3072];
 	    
-	    
-	    int temp = b[1+(10000-1)*3073+1024*2 + 31*32 + 31] & 0xFF;
-	    makePictureArray(b, 10000);
+	    //int temp = b[1+(10000-1)*3073+1024*2 + 31*32 + 31] & 0xFF;
+	    double[][] pictureArray = makePictureArray(b, 10000);
 	    
 	    BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
 	    
@@ -78,7 +78,7 @@ public class ReadCIFAR10 {
 		double[][] pictureArray = new double[numPictures][3072];
 		
 		for(int i = 0; i < numPictures; i++) {
-			for(int j = 1; j < 3072 + 1; j++) {
+			for(int j = 0; j < 3072; j++) {
 				pictureArray[i][j] = b[1+ i*(3072 + 1) + j]  & 0xFF;
 			}
 		}
