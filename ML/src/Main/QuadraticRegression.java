@@ -159,13 +159,19 @@ public class QuadraticRegression extends Thread{
 			
 			
 			
+			
+			
 		}
 		System.out.println("final:");
 		p("m:"+m.matrix.vals[0][0]);
 		p("b':"+b.matrix.vals[0][0]);
 		p("a':"+a.matrix.vals[0][0]);
 		
-		
+		chart = f.gettChart(temp1, a.matrix.vals, m.matrix.vals, b.matrix.vals, temp2);
+		frame.remove(chartPanel);
+		chartPanel = new XChartPanel<XYChart>(chart);
+		frame.add(chartPanel);
+	    frame.revalidate();
 		
 		
 	}

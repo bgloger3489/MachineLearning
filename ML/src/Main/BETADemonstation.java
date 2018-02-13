@@ -72,7 +72,7 @@ public class BETADemonstation {
 				try {
 					Integer.parseInt(temp);
 				}catch(Exception e) {
-					if(!(temp.compareTo(",") == 0))
+					if(!(temp.compareTo(",") == 0 || temp.compareTo(".") == 0|| temp.compareTo("-") == 0|| temp.compareTo(" ") == 0))
 						return false;
 				}
 				

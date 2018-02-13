@@ -1,6 +1,9 @@
 package Main;
 
+import javax.swing.JFrame;
+
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import Nodes.AddSeq;
@@ -77,13 +80,23 @@ public class LinearRegression extends Thread{
 		
 		ChartingTest f = new ChartingTest();
 		
+		JFrame frame = new JFrame();
+		XYChart chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
+		XChartPanel<XYChart> chartPanel = new XChartPanel<XYChart>(chart);
+		frame.add(chartPanel);
+		chartPanel.setBounds(0,0,700,700);
+		
+		frame.setSize(900,900);
+		frame.revalidate();
+	    frame.setVisible(true);
+		
 		for(int i = 0; i < 1000; i++) {
 			
 			prevLoss = z5.matrix.vals[0][0];
 			gradm = z5.backprop(m).vals[0][0];
 			gradb = z5.backprop(b).vals[0][0];
 			
-			if(i%100 == 0) {
+			if(i%10 == 0) {
 				System.out.println(i);
 				p("m:"+m.matrix.vals[0][0]);
 				p("b:"+b.matrix.vals[0][0]);
@@ -91,8 +104,11 @@ public class LinearRegression extends Thread{
 				p("b':"+z5.backprop(b).vals[0][0]);
 				p("----------------------------");
 				//ChartingTest f = new ChartingTest();
-			    XYChart chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
-			    new SwingWrapper<XYChart>(chart).displayChart();
+				chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
+				frame.remove(chartPanel);
+				chartPanel = new XChartPanel<XYChart>(chart);
+				frame.add(chartPanel);
+			    frame.revalidate();
 			}
 			
 			double[][] newM = {{(m.matrix.vals[0][0] - gradm *LEARNING_RATE)}};
@@ -116,9 +132,11 @@ public class LinearRegression extends Thread{
 		p("m:"+m.matrix.vals[0][0]);
 		p("b':"+b.matrix.vals[0][0]);
 		
-		//ChartingTest f = new ChartingTest();
-	    //XYChart chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
-	    //new SwingWrapper<XYChart>(chart).displayChart();
+		chart = f.gettChart(temp1, m.matrix.vals, b.matrix.vals, temp2);
+		frame.remove(chartPanel);
+		chartPanel = new XChartPanel<XYChart>(chart);
+		frame.add(chartPanel);
+	    frame.revalidate();
 		
 	}
 	

@@ -54,13 +54,13 @@ public class ALPHADemonstration {
 	//Utility Functions
 		
 		public static boolean checkValid(String s) {
-	
+			
 			for(int i =0; i< s.length(); i++) {
 				String temp = s.substring(i,i+1);
 				try {
 					Integer.parseInt(temp);
 				}catch(Exception e) {
-					if(!(temp.compareTo(",") == 0 || temp.compareTo(".") == 0|| temp.compareTo("-") == 0))
+					if(!(temp.compareTo(",") == 0 || temp.compareTo(".") == 0|| temp.compareTo("-") == 0 || temp.compareTo(" ") == 0))
 						return false;
 				}
 				
