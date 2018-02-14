@@ -36,9 +36,13 @@ public class Max extends Node{
 		//**Creates instruction array for how to calculate gradient as shown above (Where to find them -> z2 -> z2.backprop)
 				
 		double[][] z3Grad = whereToFind.backprop(goal).vals;
-	
+		
+		System.out.println("where to finsd");
+		tempMain.prarr(z3Grad);
+		
 		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
 			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){
+				System.out.println(""+whereToFind.matrix.vals[i][j]);
 				if(whereToFind.matrix.vals[i][j] > 0)
 					emptyGradArray[i][j] = z3Grad[i][j];
 				else

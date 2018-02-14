@@ -42,7 +42,9 @@ public class Tensor {
 			//double[][] temp = {{0}};
 			//aASDASDASDASDASDASD
 			double[][] temp = new double[this.matrix.getShape()[0]][this.matrix.getShape()[1]];
+			//System.out.println("CREATING EMPTY MATRIX WITH SHAPE:" + this.matrix.getShape()[0] + "," + this.matrix.getShape()[1]);
 			
+			//double[][]temp = new double[1][1];
 			return new Matrix(temp);
 		}
 		return creator.backprop(goal);

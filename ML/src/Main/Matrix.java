@@ -137,10 +137,12 @@ public class Matrix {
 		return new Matrix(temp);
 	}
 	
-	public static Matrix ones(int n) {
-		double[][] temp = new double[n][1];
-		for(int i = 0; i < n; i++) {
-			temp[i][0] = 1.0;
+	public static Matrix ones(int rows, int cols) {
+		double[][] temp = new double[rows][cols];
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				temp[i][j] = 1.0;
+			}
 		}
 		
 		return new Matrix(temp);

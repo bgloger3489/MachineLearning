@@ -20,6 +20,7 @@ public class Mult extends Node{
 	public Matrix backprop(Tensor goal) {
 		if(a == goal) 
 			return b.matrix;
+		//MAKE THIS return Matrix.multiplyMatriacies(b.matrix ,Matrix.ones( shape of goal ));
 		
 		if(b == goal)
 			return a.matrix;

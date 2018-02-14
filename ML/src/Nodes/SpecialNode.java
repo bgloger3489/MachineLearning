@@ -33,7 +33,7 @@ public class SpecialNode extends Node{
 	
 
 	public Matrix backprop(Tensor goal){
-
+		
 		double[][] emptyGradArray = new double[tempMain.NUM_PICTURES][tempMain.NUM_CLASSIFICATIONS];
 		//**Creates instruction array for how to calculate gradient as shown above (Where to find them -> z2 -> z2.backprop)
 				
@@ -44,6 +44,7 @@ public class SpecialNode extends Node{
 				if(j == allY[i])
 					emptyGradArray[i][j] = 0;
 				else
+					//System.out.println(allY[i]);
 					emptyGradArray[i][j] = z2Grad[i][allY[i]];
 			}
 		}
