@@ -27,6 +27,7 @@ public class tempMain {
 	public static void main(String[] args) {
 		LEARNING_RATE = 0.001;
 		MARGIN = 10;
+		NUM_CLASSIFICATIONS = 10;
 		test3();
 	}
 	
@@ -106,6 +107,98 @@ public class tempMain {
 	 * 
 	 * */
 	
+	public static void test4(double[][] pictureArray) {
+		//double[][] temp1 = {{1,2},{4,5},{7,8},{10,11}};
+		Tensor X = new Tensor(new Matrix(pictureArray));
+		EMERGENCY_LENGTH = pictureArray.length;
+		NUM_PICTURES = pictureArray.length;
+		NUM_CLASSIFICATIONS = 10;
+						// dog predictor, cat predictor, pig predictor
+		//double[][] temp2 = {{1,1},{2,2},{3,3}};
+		
+		//HAS TO BE SWITCHED
+		//Matrix tempp2 = Matrix.ones(NUM_PICTURES, NUM_CLASSIFICATIONS);
+		Matrix tempp2 = Matrix.ones(3072, NUM_CLASSIFICATIONS);
+		//Tensor m1 = new Tensor(new Matrix(T(temp2)));
+		Tensor m1 = new Tensor(tempp2);
+		
+		Node n1 = new Mult(X,m1);
+		Tensor z1 = new Tensor(n1);		
+		
+		//should be an array of predicitons
+		// dog prediction, cat prediction
+		// {.50, .60}
+
+		p("z1");
+		prarr(z1.matrix.vals);
+		//double[][] temp3 = {{.1,.2,.3}};//{{0},{1},{2}};
+		//Tensor b1 = new Tensor(new Matrix(temp3));
+		Tensor b1 = new Tensor(Matrix.ones(1, NUM_CLASSIFICATIONS));	
+		
+		Node n2 = new Add(z1,b1);
+		Tensor z2 = new Tensor(n2);
+		
+		
+		p("z2");
+		prarr(z2.matrix.vals);
+		
+		//p("z2back");
+		//prarr(z2.backprop(m1).vals);
+
+
+		int[] allY = {1,0,2,2};
+		
+		Node specialLink = new SpecialNode(z2,  allY);
+		
+		Tensor Ycompare = new Tensor(specialLink);
+		p("Ycompare");
+		prarr(Ycompare.matrix.vals);
+		
+		//p("b1.bak");
+		//prarr(b1.backprop(m1).vals);
+		
+		//p("z1.back");
+		//prarr(z1.backprop(m1).vals);
+		
+		p("z2back");
+		prarr(z2.backprop(m1).vals);
+		
+		p("YcompareBack");
+		prarr(Ycompare.backprop(m1).vals);
+		
+		Node n3 = new Sub(z2, Ycompare);
+		Tensor z3 = new Tensor(n3);
+
+		p("z3");
+		prarr(z3.matrix.vals);
+		
+		
+
+		p("z3.back");
+		prarr(z3.backprop(m1).vals);
+		
+		
+		Node n4 = new Max(z3);
+		Tensor z4 = new Tensor(n4);
+		
+		p("z4:");
+		prarr(z4.matrix.vals);
+		
+		p("z4.back:");
+		prarr(z4.backprop(m1).vals);
+		
+		Node n5 = new AddToRow(z4);
+		Tensor z5 = new Tensor(n5);
+		
+		p("z5:");
+		prarr(z5.matrix.vals);
+		
+		p("z5.back:");
+		prarr(z5.backprop(m1).vals);
+		
+		String[] YLabels = {"cat","dog","pig"};
+	}
+	
 	//MAKE THE CREATION OF EMPTY ARRAYS IN THE TENSOR CLASS RATHER THAN IN THE NODE CLASSES -> MAKE MATRIX>ONES ? MATRIX.ZEROS (SAME SHAPE AS ORGINONAL)
 	public static void test3() {
 		
@@ -123,7 +216,7 @@ public class tempMain {
 		Tensor m1 = new Tensor(new Matrix(T(temp2)));
 		NUM_CLASSIFICATIONS = temp2.length;
 		
-		Node n1 = new MatMult(X,m1);
+		Node n1 = new Mult(X,m1);
 		Tensor z1 = new Tensor(n1);		
 		
 		//should be an array of predicitons
@@ -162,10 +255,10 @@ public class tempMain {
 		//prarr(z1.backprop(m1).vals);
 		
 		p("z2back");
-		prarr(z2.backprop(m1).vals);
+		//prarr(z2.backprop(m1).vals);
 		
 		p("YcompareBack");
-		prarr(Ycompare.backprop(m1).vals);
+		//prarr(Ycompare.backprop(m1).vals);
 		
 		Node n3 = new Sub(z2, Ycompare);
 		Tensor z3 = new Tensor(n3);

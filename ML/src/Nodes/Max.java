@@ -42,7 +42,7 @@ public class Max extends Node{
 		
 		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
 			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){
-				System.out.println(""+whereToFind.matrix.vals[i][j]);
+				//System.out.println(""+whereToFind.matrix.vals[i][j]);
 				if(whereToFind.matrix.vals[i][j] > 0)
 					emptyGradArray[i][j] = z3Grad[i][j];
 				else

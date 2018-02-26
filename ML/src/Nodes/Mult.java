@@ -18,13 +18,13 @@ public class Mult extends Node{
 	}
 	
 	public Matrix backprop(Tensor goal) {
-		if(a == goal) 
-			return b.matrix;
+		//if(a == goal) 
+			//return b.matrix;
 		//MAKE THIS return Matrix.multiplyMatriacies(b.matrix ,Matrix.ones( shape of goal ));
 		
-		if(b == goal)
-			return a.matrix;
+		//if(b == goal)
+			//return a.matrix;
 		
-		return Matrix.addMatrix(a.backprop(goal), b.backprop(goal));
+		return Matrix.addMatrix(Matrix.multiplyMatricies(a.backprop(goal), b.matrix), Matrix.multiplyMatricies(a.matrix, b.backprop(goal)));
 	}
 }
