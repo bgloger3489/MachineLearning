@@ -37,8 +37,8 @@ public class Max extends Node{
 				
 		double[][] z3Grad = whereToFind.backprop(goal).vals;
 		
-		System.out.println("where to finsd");
-		tempMain.prarr(z3Grad);
+		//System.out.println("where to finsd");
+		//tempMain.prarr(z3Grad);
 		
 		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
 			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){

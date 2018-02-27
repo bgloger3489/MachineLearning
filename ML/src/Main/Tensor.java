@@ -52,4 +52,7 @@ public class Tensor {
 		return creator.backprop(goal);
 	}
 	
+	public void printShape() {
+		System.out.println(this.matrix.vals.length + ", " +this.matrix.vals[0].length);
+	}
 }

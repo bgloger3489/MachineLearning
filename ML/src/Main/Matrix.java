@@ -157,4 +157,9 @@ public class Matrix {
 		return new Matrix(temp);
 	}
 	
+	public void printShape() {
+		System.out.println(""+this.vals.length + ", " + +this.vals[0].length);
+		
+	}
+	
 }

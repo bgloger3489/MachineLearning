@@ -25,6 +25,10 @@ public class Mult extends Node{
 		//if(b == goal)
 			//return a.matrix;
 		
+		System.out.println("\nHLEPPP");
+		Matrix.multiplyMatricies(a.backprop(goal), b.matrix).printShape();
+		Matrix.multiplyMatricies(a.matrix, b.backprop(goal)).printShape();
+		
 		return Matrix.addMatrix(Matrix.multiplyMatricies(a.backprop(goal), b.matrix), Matrix.multiplyMatricies(a.matrix, b.backprop(goal)));
 	}
 }

@@ -26,43 +26,39 @@ public class ReadCIFAR10 {
 	    byte[] b = new byte[3073*desiredImage];
 	    inputStream.read(b);
 
-	    	
-	    //
-	   // byte temp = b[3072];
-	    
 	    //int temp = b[1+(10000-1)*3073+1024*2 + 31*32 + 31] & 0xFF;
 	    double[][] pictureArray = makePictureArray(b, desiredImage);
+	    int[] labelArray = makeLabelArray(b,desiredImage);
 	    
-	    BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+	    //displayImage(desiredImage,b);
+	  
+	    sendToTempMain(pictureArray, labelArray);
+	}
+	
+	public static void displayImage(int desiredImage, byte[] b) {
+
+	    //System.out.println("aSDasdasd: "+ pictureArray.length+", "+ pictureArray[0].length);
+		 //String path = "./outt.jpg";
+
+	    //boolean result = ImageIO.write(image, "jpeg", new FileOutputStream(path));
+	    //if (!result) {
+	    //   System.err.println("failed");
+	    //}
+	   
 	    
-	    for (int row = 0; row < 32; row++) {
+		BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+	    
+	   	for (int row = 0; row < 32; row++) {
 	    	for (int col = 0; col < 32; col++) {
 	    		Color color = new Color(
 	    			b[1 + (desiredImage-1)*3073 + 1024 * 0 + row * 32 + col] & 0xFF,
 	                b[1 + (desiredImage-1)*3073 + 1024 * 1 + row * 32 + col] & 0xFF,
 	                b[1 + (desiredImage-1)*3073 + 1024 * 2 + row * 32 + col] & 0xFF);
 	                image.setRGB(col, row, color.getRGB());
-	            ///System.out.println((1 + (desiredImage-1)*3073 + 1024 * 2 + row * 32 + col )+ "");
-	        }
-	    }
-	    
-	    String path = "./outt.jpg";
-
-	   //boolean result = ImageIO.write(image, "jpeg", new FileOutputStream(path));
-	   //if (!result) {
-	   //   System.err.println("failed");
-	   //}
-	   
-	 //displayImage(image);
-	  
-	  //System.out.println("aSDasdasd: "+ pictureArray.length+", "+ pictureArray[0].length);
-	  
-	  sendToTempMain(pictureArray);
-	  
-	}
-	
-	public static void displayImage(BufferedImage image) {
-		 JFrame frame = new JFrame();
+	                ///System.out.println((1 + (desiredImage-1)*3073 + 1024 * 2 + row * 32 + col )+ "");
+	    	}
+	      }
+		  JFrame frame = new JFrame();
 		  JPanel panel = new JPanel();
 		  JLabel label = new JLabel();
 		  
@@ -91,8 +87,20 @@ public class ReadCIFAR10 {
 		return pictureArray;
 	}
 	
-	public static void sendToTempMain(double[][] pictureArray) {
-		tempMain.test4(pictureArray);
+	public static int[] makeLabelArray(byte[] b, int numPictures){
+		int[] labelArray = new int[numPictures];
+		
+		for(int i = 0; i < numPictures; i++) {
+			
+			labelArray[i] = b[3073*i]  & 0xFF;
+			//System.out.println(""+labelArray[i]);
+		}
+		
+		return labelArray;
+	}
+	
+	public static void sendToTempMain(double[][] pictureArray, int[] labelArray) {
+		tempMain.test4(pictureArray, labelArray);
 	}
 }
 
