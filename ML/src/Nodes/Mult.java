@@ -33,31 +33,26 @@ public class Mult extends Node{
 	}
 	
 	public Matrix acutallBackprop(Tensor goal) {
-		//NEED TO FICURE OUT HOW IT WORKS IN M(B + X)!!!!!!
-		//Tensor respectTo = goal;
-		int NUMPICTURES = 0;
-		Tensor notGoal = null;
 		
-		if(a == goal)
-			b = notGoal;
-		else if(b == goal)
-			a = notGoal;
-		else
-			System.out.println("FIX BACKPROP IN MULT!!!");
+		double[][] aback = a.backprop(goal).vals;
+		double[][] bback = b.backprop(goal).vals;
 		
+		//aback*b + a*bback -> aback rows with b columns
+		//zij = E(t, Xitmtj)
 		
-		//double[][] goalback = a.backprop(goal).vals;
-		double[][] notGoalBack = notGoal.backprop(goal).vals;
+		//MIGHT CAUSE ISSUES: empty grad should be the shape of aback dot b+bback dot a
+		//instead I am cutting corners and only doing aback dot b -> both terms above should yeild shame shape in order for addition anyway REDUNDANT!
+		double[][] emptyGrad = new double[aback.length][b.matrix.vals[0].length];
 		
-		double[][] emptyGrad = new double[goal.matrix.vals.length][goal.matrix.vals[0].length];
-		
-		for(int i = 0; i < emptyGrad.length; i++) {
-			for(int j = 0; j< emptyGrad[0].length; j++) {
-				for(int p = 0; p < NUMPICTURES; p++) {
-					emptyGrad[i][j]+= notGoal.matrix.vals[p][i]*goal.matrix.vals[i][j];
+		//ALOT OF REDUNCANCY BECAUSE OF THE NATURE OF MATRIX MULTIPLICATION (4,3) (3,2) - > 3s
+		for(int i = 0; i < aback.length; i++) {
+			for(int j = 0; j < b.matrix.vals[0].length; j++) {
+				for(int t = 0; t < aback[0].length; t++) {
+					//zij = E(t, Xitmtj) -> 'X'm + X'm' 
+					emptyGrad[i][j] = (aback[i][t]*b.matrix.vals[t][j] + a.matrix.vals[i][t]*bback[t][j]);
 				}
 			}
-		}	
+		}
 		
 		return new Matrix(emptyGrad);
 	}
