@@ -162,4 +162,20 @@ public class Matrix {
 		
 	}
 	
+	public  void prarr() {
+		double[][] temp = this.vals;
+		for(int i =0; i < temp.length; i++) {
+			if(temp.length> 1)
+				System.out.print("\n{");
+			for(int j = 0; j < temp[0].length; j++) {
+				System.out.print(temp[i][j] + ", ");
+			}
+			if(temp.length> 1)
+				System.out.println("}");
+			else
+				System.out.println("");
+		}
+		
+	}
+	
 }

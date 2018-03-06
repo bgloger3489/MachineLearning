@@ -18,6 +18,19 @@ public class Mult extends Node{
 	}
 	
 	public Matrix backprop(Tensor goal) {
+		Matrix grada = a.backprop(goal);
+		Matrix gradb = b.backprop(goal);
+		
+		if(grada == null && gradb ==null) {
+			return null;
+		}else if(grada == null) {
+			return b.matrix;
+		}else if(gradb==null) {
+			return a.matrix;
+		}else {
+			return Matrix.addMatrix(Matrix.multiplyMatricies(a.backprop(goal), b.matrix), Matrix.multiplyMatricies(a.matrix, b.backprop(goal)));
+		}
+		
 		//if(a == goal) 
 			//return b.matrix;
 		//MAKE THIS return Matrix.multiplyMatriacies(b.matrix ,Matrix.ones( shape of goal ));
@@ -25,12 +38,11 @@ public class Mult extends Node{
 		//if(b == goal)
 			//return a.matrix;
 		
-		System.out.println("\nHLEPPP");
-		Matrix.multiplyMatricies(a.backprop(goal), b.matrix).printShape();
-		Matrix.multiplyMatricies(a.matrix, b.backprop(goal)).printShape();
+		//System.out.println("\nHLEPPP");
+		//Matrix.multiplyMatricies(a.backprop(goal), b.matrix).printShape();
+		//Matrix.multiplyMatricies(a.matrix, b.backprop(goal)).printShape();
 		
-		return Matrix.addMatrix(Matrix.multiplyMatricies(a.backprop(goal), b.matrix), Matrix.multiplyMatricies(a.matrix, b.backprop(goal)));
-	}
+		}
 	
 	public Matrix acutallBackprop(Tensor goal) {
 		

@@ -14,17 +14,18 @@ public class Add extends Node{
 	}
 	
 	public Matrix backprop(Tensor goal) {
-		//if(a == goal) {
-			//double[][] temp = {{1}};
-			
-			//return Matrix.addMatrix(new Matrix(temp), b.backprop(goal));
-		//}
-		//if(b == goal) {
-			//double[][] temp = {{1}};
-			//return Matrix.addMatrix(new Matrix(temp), a.backprop(goal));
-			
-		//}
-		return Matrix.addMatrix(a.backprop(goal), b.backprop(goal));
+		Matrix grada = a.backprop(goal);
+		Matrix gradb = b.backprop(goal);
+		
+		if(grada == null && gradb ==null) {
+			return null;
+		}else if(grada == null) {
+			return b.matrix;
+		}else if(gradb==null) {
+			return a.matrix;
+		}else {
+			return Matrix.addMatrix(a.backprop(goal), b.backprop(goal));
+		}
 	}
 	
 	public Matrix fowardPass() {

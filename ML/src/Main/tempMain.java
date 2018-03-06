@@ -24,6 +24,50 @@ public class tempMain {
 	public static int NUM_CLASSIFICATIONS;
 	public static int NUM_PICTURES;
 	
+	public static void main(String[] args) {
+		double[][] temp = {{.001}};
+		LEARNING_RATE = new Matrix(temp);
+		
+		double[][] temp1 = {{11,22,33,44}};
+		Tensor X = new Tensor(new Matrix(temp1));
+		EMERGENCY_LENGTH = temp1.length;
+		NUM_PICTURES = temp1.length;
+		NUM_CLASSIFICATIONS = 10;
+
+		p("X:");
+		X.printShape();
+		prarr(X.matrix.vals);
+		
+		double[][] temp2 = {{0,1,2},{3,4,5},{6,7,8},{9,10,11}};
+		Tensor m1 = new Tensor(new Matrix(temp2));
+		p("m1");
+		m1.printShape();
+		prarr(m1.matrix.vals);
+		
+		Node n1 = new Mult(X,m1);
+		Tensor z1 = new Tensor(n1);		
+
+		p("z1");
+		z1.printShape();
+		prarr(z1.matrix.vals);
+		
+		double[][] temp3 = {{0.1,0.2, 0.3}};
+		Tensor b1 = new Tensor(new Matrix(temp3));	
+		
+		Node n2 = new Add(z1,b1);
+		Tensor z2 = new Tensor(n2);
+		
+		
+		p("z2");
+		z2.printShape();
+		z2.prarr();
+		
+		
+		System.out.println("backprop:/n");
+		z2.backprop(m1).prarr();
+	}
+	
+	
 	public static void test4(double[][] pictureArray, int[] labelArray) {
 		
 		//------------------< SETTING UP >--------------------
