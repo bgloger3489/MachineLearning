@@ -3,7 +3,7 @@ package Nodes;
 import Main.Matrix;
 import Main.Tensor;
 
-public class Node {
+public abstract class Node {
 	public Tensor a;
 	public Tensor b;
 	//public Matrix grad;
@@ -14,16 +14,12 @@ public class Node {
 		this.b = b;
 	}
 
-	public Matrix fowardPass() {
-		return null;
-	}
+	public abstract Matrix fowardPass();
 	
 	public String tos() {
 		return "()";
 	}
 
 	//everytime you backprop,  check goal
-	public Matrix backprop(Tensor goal) {
-		return null;
-	}
+	public abstract Matrix backprop(Tensor goal);
 }

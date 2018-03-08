@@ -46,6 +46,8 @@ public class Matrix {
 
 		double[][] temp = new double[m1.vals.length][m2.vals[0].length];
 		
+		//zij = Xitmtj
+		
 		for(int i = 0; i < m1.vals.length; i++) { //loop through m1 going down
 			for(int j = 0; j < m2.vals.length; j++) { //m2 == m1[0]    loop through m1 going across OR m2 going down
 				for(int t = 0; t < m2.vals[0].length; t++) { //loop through m2 going across
