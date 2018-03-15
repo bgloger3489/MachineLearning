@@ -28,6 +28,21 @@ public class Add extends Node{
 		}
 	}
 	
+	public Matrix components(Tensor goal) {
+		Matrix grada = a.components(goal);
+		Matrix gradb = b.components(goal);
+		if(grada == null && gradb == null) {
+			System.out.println("check add compoenents");
+			return null;
+		}
+		if(grada == null)
+			return gradb;
+		if(gradb == null)
+			return grada;
+		System.out.println("return grada+gradb");
+		return Matrix.addMatrix(grada, gradb);
+	}
+	
 	public Matrix fowardPass() {
 		return Matrix.addMatrix(a.matrix,b.matrix);
 	}

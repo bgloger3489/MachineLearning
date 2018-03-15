@@ -44,7 +44,29 @@ public class Mult extends Node{
 		
 		}
 	
-	public Matrix acutallBackprop(Tensor goal) {
+	
+	public Matrix components(Tensor goal) {
+		if(b==goal && a.vector) {
+			double[][] grad = new double[goal.matrix.vals.length][goal.matrix.vals[0].length];
+			
+			for(int i = 0; i < grad.length; i++) {
+				for(int j = 0; j < grad[0].length; j++) {
+					grad[i][j] = a.matrix.vals[0][j];
+				}
+			}
+			return new Matrix(grad);
+			
+		}else {
+			//if a is goal, if b is differentiable by goal, if a is differentiable by goal, if neither have relation to goal
+			//if a is not a ve4ctor
+			System.out.println("Check Mult compentnts");
+			return null;
+		}
+		
+		
+	}
+	
+	/*public Matrix acutallBackprop(Tensor goal) {
 		
 		double[][] aback = a.backprop(goal).vals;
 		double[][] bback = b.backprop(goal).vals;
@@ -67,6 +89,6 @@ public class Mult extends Node{
 		}
 		
 		return new Matrix(emptyGrad);
-	}
+	}*/
 	
 }

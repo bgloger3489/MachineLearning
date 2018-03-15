@@ -8,6 +8,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import Nodes.Add;
 import Nodes.AddSeq;
 import Nodes.AddToRow;
+import Nodes.Compare;
 import Nodes.Exponent;
 import Nodes.MatMult;
 import Nodes.Max;
@@ -29,7 +30,7 @@ public class tempMain {
 		LEARNING_RATE = new Matrix(temp);
 		
 		double[][] temp1 = {{11,22,33,44}};
-		Tensor X = new Tensor(new Matrix(temp1));
+		Tensor X = new Tensor(new Matrix(temp1), true);
 		EMERGENCY_LENGTH = temp1.length;
 		NUM_PICTURES = temp1.length;
 		NUM_CLASSIFICATIONS = 10;
@@ -51,20 +52,34 @@ public class tempMain {
 		z1.printShape();
 		prarr(z1.matrix.vals);
 		
-		double[][] temp3 = {{0.1,0.2, 0.3}};
-		Tensor b1 = new Tensor(new Matrix(temp3));	
+		z1.components(m1);
+		
+		double[][] temp3 = {{0.1,0.2,0.3}};
+		Tensor b1 = new Tensor(new Matrix(temp3));
+		p("b1");
+		b1.printShape();
+		prarr(b1.matrix.vals);
 		
 		Node n2 = new Add(z1,b1);
 		Tensor z2 = new Tensor(n2);
-		
-		
 		p("z2");
 		z2.printShape();
-		z2.prarr();
+		prarr(z2.matrix.vals);
+		
+		Node n3 = new Compare(z2, 1);
+		Tensor z3 = new Tensor(n3);
+		p("z3");
+		z3.printShape();
+		prarr(z3.matrix.vals);
 		
 		
-		System.out.println("backprop:/n");
-		z2.backprop(m1).prarr();
+		
+		
+		p("z3.components");
+		prarr(z3.components(m1).vals);
+		
+		
+		
 	}
 	
 	

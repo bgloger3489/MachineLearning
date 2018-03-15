@@ -26,4 +26,8 @@ public class Node {
 	public Matrix backprop(Tensor goal) {
 		return null;
 	}
+	
+	public Matrix components(Tensor goal) {
+		return null;
+	}
 }

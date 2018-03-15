@@ -8,18 +8,29 @@ public class Tensor {
 	public Matrix matrix;
 	public Node creator;
 	public Matrix grad;
-	
+	public boolean vector;
 
 	//init with vals
 	public Tensor(Matrix matrix) {
 		this.matrix = matrix;
 		this.creator = null;
+		this.vector = false;
+	}
+	public Tensor(Matrix matrix, boolean isVector ) {
+		this.matrix = matrix;
+		this.creator = null;
+		this.vector = isVector;
 	}
 	
 	//init by opperation
 	public Tensor(Node creator) {
 		this.matrix = creator.fowardPass();
-		this.creator = creator; 
+		this.creator = creator;
+		if(this.matrix.vals[0].length == 0 || this.matrix.vals[0].length == 0) {
+			this.vector = true;
+		}else {
+			this.vector = false;
+		}
 	}
 	
 	public static void updateTensors(Tensor[] n) {
@@ -52,6 +63,17 @@ public class Tensor {
 			//return new Matrix(temp);
 		}
 		return creator.backprop(goal);
+	}
+	
+	public Matrix components(Tensor goal) {
+		if(this != goal && creator != null) {
+			return creator.components(goal);
+		}if(this != goal && this.creator == null){
+			return null;
+		}else {
+			System.out.println("check Tensor compeonents");
+			return null;
+		}
 	}
 	
 	public void printShape() {

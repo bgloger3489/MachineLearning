@@ -29,6 +29,22 @@ public class Max extends Node{
 	
 	
 	
+	public Matrix components(Tensor goal) {
+		double[][] grad = new double[goal.matrix.vals.length][goal.matrix.vals[0].length];
+		double[][] grada = a.components(goal).vals;
+		
+		
+		for(int i = 0; i < grad.length; i++){
+			for(int j = 0; j < grad[0].length; j ++){
+				if(a.matrix.vals[i][j] > 0)
+					grad[i][j] = grada[i][j];
+				else
+					grad[i][j] = 0;
+			}
+		}
+		return new Matrix(grad);
+	}
+	
 
 	public Matrix backprop(Tensor goal){
 
