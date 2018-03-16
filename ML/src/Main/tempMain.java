@@ -14,6 +14,7 @@ import Nodes.MatMult;
 import Nodes.Max;
 import Nodes.Mult;
 import Nodes.Node;
+import Nodes.Sigma;
 import Nodes.SpecialNode;
 import Nodes.Sub;
 
@@ -24,6 +25,8 @@ public class tempMain {
 	public static Matrix LEARNING_RATE;
 	public static int NUM_CLASSIFICATIONS;
 	public static int NUM_PICTURES;
+	public static int NUM_FEATURES;
+	public static double[][] CURRENT_PICTURE;
 	
 	public static void main(String[] args) {
 		double[][] temp = {{.001}};
@@ -34,6 +37,7 @@ public class tempMain {
 		EMERGENCY_LENGTH = temp1.length;
 		NUM_PICTURES = temp1.length;
 		NUM_CLASSIFICATIONS = 10;
+		MARGIN = 10;
 
 		p("X:");
 		X.printShape();
@@ -55,7 +59,7 @@ public class tempMain {
 		z1.components(m1);
 		
 		double[][] temp3 = {{0.1,0.2,0.3}};
-		Tensor b1 = new Tensor(new Matrix(temp3));
+		Tensor b1 = new Tensor(new Matrix(temp3), true);
 		p("b1");
 		b1.printShape();
 		prarr(b1.matrix.vals);
@@ -66,20 +70,129 @@ public class tempMain {
 		z2.printShape();
 		prarr(z2.matrix.vals);
 		
-		Node n3 = new Compare(z2, 1);
+		int Yi = 0;
+		
+		Node n3 = new Compare(z2, Yi);
 		Tensor z3 = new Tensor(n3);
 		p("z3");
 		z3.printShape();
 		prarr(z3.matrix.vals);
 		
+		Node n4 = new Max(z3);
+		Tensor z4 = new Tensor(n4);
+		p("z4");
+		z4.printShape();
+		prarr(z4.matrix.vals);
 		
+		Node n5 = new Sigma(z4);
+		Tensor z5 = new Tensor(n5);
+		p("z5");
+		z5.printShape();
+		prarr(z5.matrix.vals);
 		
-		
-		p("z3.components");
-		prarr(z3.components(m1).vals);
-		
-		
-		
+		p("z5.components");
+		prarr(z5.components(b1).vals);
+	}
+	
+	public static void loadNextPicture(double[] newPic) {
+		for(int i = 0; i< newPic.length; i++) {
+			CURRENT_PICTURE[0][i] = newPic[i];
+		}
+	}
+	
+	public static void test5(double[][] pictureArray, int[] labelArray) {
+		//------------------< SETTING UP >--------------------
+			p("SETTING UP:\n");
+				
+			double[][] temp = {{.001}};
+			LEARNING_RATE = new Matrix(temp);
+			
+			EMERGENCY_LENGTH = pictureArray.length;
+			NUM_PICTURES = pictureArray.length;
+			NUM_FEATURES = pictureArray[0].length;
+			NUM_CLASSIFICATIONS = 10;
+			MARGIN = 10; 
+			
+			CURRENT_PICTURE = new double[1][NUM_FEATURES];
+			//Loads next picture into CURRENT_PICTURE
+			loadNextPicture(pictureArray[0]);
+			
+			Tensor X = new Tensor(new Matrix(CURRENT_PICTURE), true);
+			p("X:");
+			X.printShape();
+			prarr(X.matrix.vals);
+			
+			Tensor m1 = new Tensor(Matrix.random(NUM_FEATURES, NUM_CLASSIFICATIONS));
+			p("m1");
+			m1.printShape();
+			prarr(m1.matrix.vals);
+			
+			Node n1 = new Mult(X,m1);
+			Tensor z1 = new Tensor(n1);		
+
+			p("z1");
+			z1.printShape();
+			prarr(z1.matrix.vals);
+			
+			z1.components(m1);
+			
+			Tensor b1 = new Tensor(Matrix.random(1, NUM_FEATURES));
+			p("b1");
+			b1.printShape();
+			prarr(b1.matrix.vals);
+			
+			Node n2 = new Add(z1,b1);
+			Tensor z2 = new Tensor(n2);
+			p("z2");
+			z2.printShape();
+			prarr(z2.matrix.vals);
+			
+			int Yi = labelArray[0];
+			
+			Node n3 = new Compare(z2, Yi);
+			Tensor z3 = new Tensor(n3);
+			p("z3");
+			z3.printShape();
+			prarr(z3.matrix.vals);
+			
+			Node n4 = new Max(z3);
+			Tensor z4 = new Tensor(n4);
+			p("z4");
+			z4.printShape();
+			prarr(z4.matrix.vals);
+			
+			Node n5 = new Sigma(z4);
+			Tensor z5 = new Tensor(n5);
+			p("z5");
+			z5.printShape();
+			prarr(z5.matrix.vals);
+			
+			p("z5.components");
+			prarr(z5.components(m1).vals);
+			
+		Tensor[] tenArr = {z1,z2,z3,z4,z5};
+		Matrix gradm;
+		Matrix gradb;
+		for(int i = 1; i < NUM_PICTURES; i++) {
+			System.out.println('a');
+			prarr(z5.components(m1).vals);
+			gradm = z5.components(m1);
+			gradb = z5.components(b1);
+			
+			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multiplyMatricies(gradm, LEARNING_RATE));
+			
+			b1.matrix = Matrix.subMatrix(b1.matrix,  Matrix.multiplyMatricies(gradb, LEARNING_RATE));
+			
+			loadNextPicture(pictureArray[i]);
+			
+			X = new Tensor(new Matrix(CURRENT_PICTURE), true);
+			Yi = labelArray[i];
+			
+			Tensor.updateTensors(tenArr);
+			//if(prevLoss <= z5.matrix.vals[0][0]) {
+			//	break;
+			//}
+		}
 	}
 	
 	

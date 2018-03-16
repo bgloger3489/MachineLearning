@@ -148,6 +148,17 @@ public class Matrix {
 		return new Matrix(temp);
 	}
 	
+	public static Matrix random(int rows, int cols) {
+		double[][] temp = new double[rows][cols];
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				temp[i][j] = Math.random();
+			}
+		}
+		
+		return new Matrix(temp);
+	}
+	
 	public static Matrix zeros(int n) {
 		double[][] temp = new double[n][1];
 		for(int i = 0; i < n; i++) {

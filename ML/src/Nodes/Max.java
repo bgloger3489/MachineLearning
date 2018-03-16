@@ -8,21 +8,19 @@ public class Max extends Node{
 	Tensor whereToFind;
 	
 	public Max(Tensor a) {
-		super(null, null);
+		super(a, null);
 		this.whereToFind = a;
-	
 	}
 	
 	public Matrix fowardPass() {
-		double[][] emptyArray = new double[tempMain.NUM_PICTURES][tempMain.NUM_CLASSIFICATIONS];
+		double[][] emptyArray = new double[a.matrix.vals.length][a.matrix.vals[0].length];
 		
-		for(int i = 0; i < tempMain.NUM_PICTURES; i++){
-			for(int j = 0; j < tempMain.NUM_CLASSIFICATIONS; j ++){
-				if(whereToFind.matrix.vals[i][j] > 0)
-					emptyArray[i][j] = whereToFind.matrix.vals[i][j];
-				else
-					emptyArray[i][j] = 0;
-			}
+		for(int i = 0; i < emptyArray[0].length; i++){
+			if(a.matrix.vals[0][i] > 0)
+				emptyArray[0][i] = a.matrix.vals[0][i];
+			else
+				emptyArray[0][i] = 0;
+			
 		}
 		return new Matrix(emptyArray);
 	}
@@ -36,7 +34,7 @@ public class Max extends Node{
 		
 		for(int i = 0; i < grad.length; i++){
 			for(int j = 0; j < grad[0].length; j ++){
-				if(a.matrix.vals[i][j] > 0)
+				if(a.matrix.vals[0][j] > 0)
 					grad[i][j] = grada[i][j];
 				else
 					grad[i][j] = 0;

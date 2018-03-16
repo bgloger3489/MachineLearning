@@ -21,7 +21,7 @@ public class ReadCIFAR10 {
 	public static void main(String[] args) throws IOException {
 		FileInputStream inputStream = new FileInputStream("C:\\Users\\BT_1N3_11\\Desktop\\cifar-10-batches-bin\\data_batch_1.bin");
 		
-		int desiredImage = 3;//10000;
+		int desiredImage = 10000;
 		
 	    byte[] b = new byte[3073*desiredImage];
 	    inputStream.read(b);
@@ -100,7 +100,7 @@ public class ReadCIFAR10 {
 	}
 	
 	public static void sendToTempMain(double[][] pictureArray, int[] labelArray) {
-		tempMain.test4(pictureArray, labelArray);
+		tempMain.test5(pictureArray, labelArray);
 	}
 }
 
