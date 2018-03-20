@@ -173,6 +173,16 @@ public class Matrix {
 		
 	}
 	
+	public static Matrix multScalar(Matrix a, Matrix b) {
+		double[][] temp = new double[a.vals.length][a.vals[0].length];
+		for(int i = 0; i < a.vals.length; i++) {
+			for(int j = 0; j < a.vals[0].length; j++) {
+				temp[i][j] = a.vals[i][j]*b.vals[0][0];
+			}
+		}
+		return new Matrix(temp);
+	}
+	
 	public  void prarr() {
 		double[][] temp = this.vals;
 		for(int i =0; i < temp.length; i++) {

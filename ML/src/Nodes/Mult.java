@@ -51,7 +51,7 @@ public class Mult extends Node{
 			
 			for(int i = 0; i < grad.length; i++) {
 				for(int j = 0; j < grad[0].length; j++) {
-					grad[i][j] = a.matrix.vals[0][j];
+					grad[i][j] = a.matrix.vals[0][i];
 				}
 			}
 			return new Matrix(grad);

@@ -76,7 +76,7 @@ public class ReadCIFAR10 {
 	}
 	
 	public static double[][] makePictureArray(byte[] b, int numPictures){
-		double[][] pictureArray = new double[numPictures][3072];
+		double[][] pictureArray = new double[numPictures][3072 + 1];//add 1 for BIAS TRICK
 		
 		for(int i = 0; i < numPictures; i++) {
 			for(int j = 0; j < 3072; j++) {
@@ -84,6 +84,10 @@ public class ReadCIFAR10 {
 			}
 		}
 		
+		//for bias trick
+		for(int i = 0; i < numPictures; i++) {
+			pictureArray[i][3072] = 1;
+		}
 		return pictureArray;
 	}
 	

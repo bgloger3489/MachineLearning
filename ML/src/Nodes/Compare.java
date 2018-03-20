@@ -17,9 +17,9 @@ public class Compare extends Node{
 		
 		//b is yLabel
 		for(int j = 0; j < temp[0].length; j ++){
-			if(j == yLabel)
-				temp[0][j] = 0;// whereToFind.matrix.vals[i][allY[i]];//0;//tempMain.MARGIN;
-			else
+			//if(j == yLabel)
+				//temp[0][j] = 0;// whereToFind.matrix.vals[i][allY[i]];//0;//tempMain.MARGIN;
+			//else
 				temp[0][j] = a.matrix.vals[0][j] -  a.matrix.vals[0][yLabel] + tempMain.MARGIN;
 			
 		}
@@ -30,13 +30,20 @@ public class Compare extends Node{
 		//assumes that a is a vector of labels
 		double[][] grad = new double[goal.matrix.vals.length][goal.matrix.vals[0].length];//a.components(goal).vals; //new double[0][a.matrix.vals.length];
 		double[][] grada = a.components(goal).vals;
+		
+		int timesTooBigMargin =-1;//-1 because the below loop with unintentioanlly include Yi
+		for(int i = 0; i < a.matrix.vals[0].length; i++) {
+			if(a.matrix.vals[0][i] -  a.matrix.vals[0][yLabel] + tempMain.MARGIN > 0)
+				timesTooBigMargin++;
+		}
+		
 		//b is yLabel
 		for(int i = 0; i < grad.length; i ++) {
 			for(int j = 0; j < grad[0].length; j ++){
 				if(j == yLabel)
-					grad[i][j] = 0;
+					grad[i][j] = - grada[i][j] * timesTooBigMargin;
 				else
-					grad[i][j] = grada[i][j] -  grada[i][yLabel];
+					grad[i][j] = grada[i][j];// -  grada[i][yLabel];
 			
 			}
 		}
