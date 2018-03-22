@@ -21,7 +21,7 @@ public class ReadCIFAR10 {
 	public static void main(String[] args) throws IOException {
 		FileInputStream inputStream = new FileInputStream("C:\\Users\\BT_1N3_11\\Desktop\\cifar-10-batches-bin\\data_batch_1.bin");
 		
-		int desiredImage = 10000;
+		int desiredImage = 10000-5;
 		
 	    byte[] b = new byte[3073*desiredImage];
 	    inputStream.read(b);
@@ -30,10 +30,53 @@ public class ReadCIFAR10 {
 	    double[][] pictureArray = makePictureArray(b, desiredImage);
 	    int[] labelArray = makeLabelArray(b,desiredImage);
 	    
-	    //displayImage(desiredImage,b);
+	    displayImage(desiredImage,b);
 	  
 	    sendToTempMain(pictureArray, labelArray);
 	}
+	
+	public static void createImage(double[][] arr) {
+		BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+		
+		for(int i = 0; i < 10 ; i++) {
+	   	for (int r = 0; r < 32; r++) {
+	   		for(int c = 0; c < 32; c++) {
+	   			
+	   			int red = (int)(arr[32*r+c][i]);
+	   			int g = (int)(arr[1024+32*r+c][i]);
+	   			int b =(int)(arr[1024*2+32*r+c][i]);
+	   			
+	   			if(red > 255) 
+	   				red = 255;
+	   			if(g > 255)
+	   				g = 255;
+	   			if(b > 255)
+	   				b = 255;
+	   			
+	   			Color color = new Color(red, g, b);
+	   			image.setRGB(c, r, color.getRGB());
+	
+	   		}
+	   	}
+	   	
+		  JFrame frame = new JFrame();
+		  JPanel panel = new JPanel();
+		  JLabel label = new JLabel();
+		  
+		  panel.add(label);
+		  ImageIcon imageIcon = new ImageIcon(image);
+		  Image image1 = imageIcon.getImage(); // transform it 
+		  Image newimg = image1.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		  imageIcon = new ImageIcon(newimg);
+		  label.setIcon(imageIcon);
+		  
+		  frame.add(panel);
+		  frame.setSize(300,300);
+		  frame.setVisible(true);
+		  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		}
+	}
+	
 	
 	public static void displayImage(int desiredImage, byte[] b) {
 

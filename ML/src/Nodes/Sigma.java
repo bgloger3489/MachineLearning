@@ -4,8 +4,8 @@ import Main.Matrix;
 import Main.Tensor;
 
 public class Sigma extends Node{
-	int yLabel;
-	public Sigma(Tensor a,int yLabel) {
+	int[][] yLabel;
+	public Sigma(Tensor a,int[][] yLabel) {
 		super(a, null);
 		this.yLabel = yLabel;
 		// TODO Auto-generated constructor stub
@@ -14,7 +14,7 @@ public class Sigma extends Node{
 	public Matrix fowardPass() {
 		double[][] totalLoss = {{0}};
 		for(int i = 0; i < a.matrix.vals[0].length; i++) {
-			if(i != this.yLabel) 
+			if(i != this.yLabel[0][0]) 
 				totalLoss[0][0]+= a.matrix.vals[0][i];
 		}
 		return new Matrix(totalLoss);

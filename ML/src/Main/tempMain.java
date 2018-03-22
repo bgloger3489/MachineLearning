@@ -72,7 +72,7 @@ public class tempMain {
 		
 		int Yi =1;
 		
-		Node n3 = new Compare(z1,Yi);
+		/*Node n3 = new Compare(z1,Yi);
 		Tensor z3 = new Tensor(n3);
 		p("z3");
 		z3.printShape();
@@ -97,7 +97,7 @@ public class tempMain {
 		m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z5.components(m1), LEARNING_RATE));
 		
 		p("update");
-		prarr(m1.matrix.vals);//m1.matrix.vals);
+		prarr(m1.matrix.vals);//m1.matrix.vals);*/
 		
 		
 	}
@@ -155,7 +155,7 @@ public class tempMain {
 			//z2.printShape();
 			//prarr(z2.matrix.vals);
 			
-			int Yi = labelArray[0];
+			int[][] Yi = {{labelArray[0]}};
 			
 			Node n3 = new Compare(z1, Yi);
 			Tensor z3 = new Tensor(n3);
@@ -187,14 +187,14 @@ public class tempMain {
 		Tensor[] tenArr = {z1,z3,z4,z5};
 
 		for(int i = 1; i < NUM_PICTURES -1; i++) {
-			System.out.println("Type"+i);
+			System.out.println("Type"+i + "Yi: "+ Yi[0][0]);
 			
 			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z5.components(m1), LEARNING_RATE));
 			//prarr(m1.matrix.vals);
 			loadNextPicture(pictureArray[i]);
 			
 			X = new Tensor(new Matrix(CURRENT_PICTURE), true);
-			Yi = labelArray[i];
+			Yi[0][0] = labelArray[i];
 			
 			Tensor.updateTensors(tenArr);
 			//if(prevLoss <= z5.matrix.vals[0][0]) {
@@ -204,20 +204,24 @@ public class tempMain {
 		
 		loadNextPicture(pictureArray[NUM_PICTURES - 1]);
 		X = new Tensor(new Matrix(CURRENT_PICTURE), true);
-		Yi = labelArray[NUM_PICTURES - 1];
+		Yi[0][0] = labelArray[NUM_PICTURES - 1];
 		
 		Tensor.updateTensors(tenArr);
 		
 		//GUESS;
-		int greatest = 0;
+		double greatest = 0;
 		int idx = 0;
 		for(int i =0; i < z1.matrix.vals[0].length; i++) {
 			if(z1.matrix.vals[0][i] > greatest) {
 				idx = i;
-				
+				greatest = z1.matrix.vals[0][i];
 			}
 		}
 		
+		System.out.println("________________________________");
+		System.out.println("Guess: "+ idx + " Correct: " + Yi[0][0]);
+		prarr(z1.matrix.vals);
+		ReadCIFAR10.createImage(m1.matrix.vals);
 	}
 	
 	

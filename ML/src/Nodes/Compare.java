@@ -5,8 +5,8 @@ import Main.Tensor;
 import Main.tempMain;
 
 public class Compare extends Node{
-	int yLabel;
-	public Compare(Tensor a, int yLabel) {
+	int[][] yLabel;
+	public Compare(Tensor a, int[][] yLabel) {
 		super(a, null);
 		this.yLabel = yLabel;
 	}
@@ -20,7 +20,7 @@ public class Compare extends Node{
 			//if(j == yLabel)
 				//temp[0][j] = 0;// whereToFind.matrix.vals[i][allY[i]];//0;//tempMain.MARGIN;
 			//else
-				temp[0][j] = a.matrix.vals[0][j] -  a.matrix.vals[0][yLabel] + tempMain.MARGIN;
+				temp[0][j] = a.matrix.vals[0][j] -  a.matrix.vals[0][yLabel[0][0]] + tempMain.MARGIN;
 			
 		}
 		return new Matrix(temp);
@@ -33,14 +33,14 @@ public class Compare extends Node{
 		
 		int timesTooBigMargin =-1;//-1 because the below loop with unintentioanlly include Yi
 		for(int i = 0; i < a.matrix.vals[0].length; i++) {
-			if(a.matrix.vals[0][i] -  a.matrix.vals[0][yLabel] + tempMain.MARGIN > 0)
+			if(a.matrix.vals[0][i] -  a.matrix.vals[0][yLabel[0][0]] + tempMain.MARGIN > 0)
 				timesTooBigMargin++;
 		}
 		
 		//b is yLabel
 		for(int i = 0; i < grad.length; i ++) {
 			for(int j = 0; j < grad[0].length; j ++){
-				if(j == yLabel)
+				if(j == yLabel[0][0])
 					grad[i][j] = - grada[i][j] * timesTooBigMargin;
 				else
 					grad[i][j] = grada[i][j];// -  grada[i][yLabel];
