@@ -13,9 +13,11 @@ public class Sigma extends Node{
 
 	public Matrix fowardPass() {
 		double[][] totalLoss = {{0}};
-		for(int i = 0; i < a.matrix.vals[0].length; i++) {
-			if(i != this.yLabel[0][0]) 
-				totalLoss[0][0]+= a.matrix.vals[0][i];
+		for(int i = 0; i < a.matrix.vals.length; i++) {
+			for(int j = 0; j < a.matrix.vals[0].length; j++) {
+				if(j != this.yLabel[0][0]) 
+					totalLoss[0][0]+= a.matrix.vals[i][j];
+			}
 		}
 		return new Matrix(totalLoss);
 	}

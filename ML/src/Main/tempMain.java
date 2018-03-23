@@ -29,22 +29,59 @@ public class tempMain {
 	public static double[][] CURRENT_PICTURE;
 	
 	public static void main(String[] args) {
-		double[][] temp = {{.001}};
-		LEARNING_RATE = new Matrix(temp);
+		//------------------< SETTING UP >--------------------
 		
-		double[][] temp1 = {{11,22,33,44,1}};
-		Tensor X = new Tensor(new Matrix(temp1), true);
-		EMERGENCY_LENGTH = temp1.length;
-		NUM_PICTURES = temp1.length;
-		NUM_CLASSIFICATIONS = 10;
-		MARGIN = 10;
-
+		double[][] tempLR = {{.01}};
+		LEARNING_RATE = new Matrix(tempLR);
+		
+		Tensor X = new Tensor(Matrix.random(1, 3), true);
+		
+		Tensor m1 = new Tensor(Matrix.random(3, 10));
+		p("m1");
+		m1.printShape();
+		prarr(m1.matrix.vals);
+		
+		Node nn1 = new Mult(X,m1);
+		Tensor zz1 = new Tensor(nn1);
+		
+		Node n1 = new Exponent(zz1,2);
+		Tensor z1 = new Tensor(n1);
+		
+		int[][] temp = {{-1}};
+		Node n2 = new Sigma(z1,temp);
+		Tensor z2 = new Tensor(n2);
+		
+		
+		p("\n\nz2.components");
+		prarr(z2.components(m1).vals);
+		
+		m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z2.components(m1), LEARNING_RATE));
+	
+		p("m1'");
+		m1.printShape();
+		prarr(m1.matrix.vals);
+		
+		
+		/*p("SETTING UP:\n");
+			
+		double[][] temp = {{.01}};
+		LEARNING_RATE = new Matrix(temp);
+		double[][] xtemp = {{11,22,33,44,1}};
+		//double[][] mtemp = {{0,1,2},{3,4,5},{6,7,8},{9,10,11},{.1,.2,.3}};
+		
+		NUM_PICTURES = 1;
+		NUM_FEATURES = xtemp[0].length;
+		NUM_CLASSIFICATIONS = 3;
+		MARGIN = 10; 
+		
+		CURRENT_PICTURE = xtemp;
+		
+		Tensor X = new Tensor(new Matrix(CURRENT_PICTURE), true);
 		p("X:");
 		X.printShape();
 		prarr(X.matrix.vals);
 		
-		double[][] temp2 = {{0,1,2},{3,4,5},{6,7,8},{9,10,11},{.1,.2,.3}};
-		Tensor m1 = new Tensor(new Matrix(temp2));
+		Tensor m1 = new Tensor(Matrix.random(NUM_FEATURES, NUM_CLASSIFICATIONS));
 		p("m1");
 		m1.printShape();
 		prarr(m1.matrix.vals);
@@ -58,8 +95,7 @@ public class tempMain {
 		
 		z1.components(m1);
 		
-		//double[][] temp3 = {{0.1,0.2,0.3}};
-		//Tensor b1 = new Tensor(new Matrix(temp3), true);
+		//Tensor b1 = new Tensor(Matrix.random(1, NUM_FEATURES));
 		//p("b1");
 		//b1.printShape();
 		//prarr(b1.matrix.vals);
@@ -70,9 +106,9 @@ public class tempMain {
 		//z2.printShape();
 		//prarr(z2.matrix.vals);
 		
-		int Yi =1;
+		int[][] Yi = {{0}};
 		
-		/*Node n3 = new Compare(z1,Yi);
+		Node n3 = new Compare(z1, Yi);
 		Tensor z3 = new Tensor(n3);
 		p("z3");
 		z3.printShape();
@@ -84,20 +120,36 @@ public class tempMain {
 		z4.printShape();
 		prarr(z4.matrix.vals);
 		
-		
 		Node n5 = new Sigma(z4, Yi);
 		Tensor z5 = new Tensor(n5);
 		p("z5");
 		z5.printShape();
 		prarr(z5.matrix.vals);
 		
-		p("z5.components");
-		prarr(z5.components(m1).vals);
 		
-		m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z5.components(m1), LEARNING_RATE));
 		
-		p("update");
-		prarr(m1.matrix.vals);//m1.matrix.vals);*/
+		Node nn1 = new Exponent(m1, 2);
+		Tensor zz1 = new Tensor(nn1);
+		
+		int[][] invalid = {{-1}};
+		Node nn2 = new Sigma (zz1, invalid);
+		Tensor zz2 = new Tensor(nn2);
+		
+		Node n6 = new Add(z5,zz2);
+		Tensor z6 = new Tensor(n6);
+		
+		
+		
+		p("z6.components");
+		prarr(z6.components(m1).vals);
+		
+		m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z6.components(m1), LEARNING_RATE));
+	
+		p("m1");
+		m1.printShape();
+		prarr(m1.matrix.vals);/*/
+		
+		
 		
 		
 	}
@@ -175,37 +227,40 @@ public class tempMain {
 			z5.printShape();
 			prarr(z5.matrix.vals);
 			
-			/*Node nn1 = new Exponent(m1, 2);
+			
+			
+			Node nn1 = new Exponent(m1, 2);
 			Tensor zz1 = new Tensor(nn1);
 			
 			int[][] invalid = {{-1}};
-			Node nn2 = new Sigma (new Tensor(zz1.matrix.T()), invalid);
+			Node nn2 = new Sigma (zz1, invalid);
 			Tensor zz2 = new Tensor(nn2);
-
-			Node nn3 = new Sigma (new Tensor(zz1.matrix.T()), invalid);
-			Tensor zz3 = new Tensor(nn3);*/
+			
+			Node n6 = new Add(z5,zz2);
+			Tensor z6 = new Tensor(n6);
 			
 			
-			p("z5.components");
-			prarr(z5.components(m1).vals);
 			
-			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z5.components(m1), LEARNING_RATE));
+			p("z6.components");
+			prarr(z6.components(m1).vals);
+			
+			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z6.components(m1), LEARNING_RATE));
 		
-			p("m1");
+			p("m1'");
 			m1.printShape();
-			prarr(m1.matrix.vals);
+			//prarr(m1.matrix.vals);
 			
 			
 			
 			
 			
 			
-		Tensor[] tenArr = {z1,z3,z4,z5};
+		Tensor[] tenArr = {z1,z3,z4,z5,zz1,zz2,z6};
 
-		for(int i = 1; i < NUM_PICTURES -1; i++) {
+		for(int i = 1; i < 1/*NUM_PICTURES -1*/; i++) {
 			System.out.println("Type"+i + "Yi: "+ Yi[0][0]);
 			
-			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z5.components(m1), LEARNING_RATE));
+			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z6.components(m1), LEARNING_RATE));
 			//prarr(m1.matrix.vals);
 			loadNextPicture(pictureArray[i]);
 			
@@ -237,7 +292,7 @@ public class tempMain {
 		System.out.println("________________________________");
 		System.out.println("Guess: "+ idx + " Correct: " + Yi[0][0]);
 		prarr(z1.matrix.vals);
-		ReadCIFAR10.createImage(m1.matrix.vals);
+		//ReadCIFAR10.createImage(m1.matrix.vals);
 	}
 	
 	

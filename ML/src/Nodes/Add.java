@@ -39,7 +39,7 @@ public class Add extends Node{
 			return gradb;
 		if(gradb == null)
 			return grada;
-		System.out.println("return grada+gradb");
+		//System.out.println("return grada+gradb");
 		return Matrix.addMatrix(grada, gradb);
 	}
 	
