@@ -36,44 +36,53 @@ public class ReadCIFAR10 {
 	}
 	
 	public static void createImage(double[][] arr) {
-		BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image;
 		
 		for(int i = 0; i < 10 ; i++) {
-	   	for (int r = 0; r < 32; r++) {
-	   		for(int c = 0; c < 32; c++) {
+			image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+			for (int r = 0; r < 32; r++) {
+				for(int c = 0; c < 32; c++) {
 	   			
-	   			int red = (int)(arr[32*r+c][i]);
-	   			int g = (int)(arr[1024+32*r+c][i]);
-	   			int b =(int)(arr[1024*2+32*r+c][i]);
+					int red = (int)(arr[32*r+c][i]);
+					int g = (int)(arr[1024+32*r+c][i]);
+					int b =(int)(arr[1024*2+32*r+c][i]);
 	   			
-	   			if(red > 255) 
-	   				red = 255;
-	   			if(g > 255)
-	   				g = 255;
-	   			if(b > 255)
-	   				b = 255;
-	   			
-	   			Color color = new Color(red, g, b);
-	   			image.setRGB(c, r, color.getRGB());
+					if(red > 255) 
+						red = 255;
+					if(g > 255)
+						g = 255;
+					if(b > 255)
+						b = 255;
+					
+					if(red <0) 
+						red = 0;
+					if(g <0)
+						g = 0;
+					if(b <0)
+						b = 0;
+					
+					//System.out.println("r:" +red+"g:"+g+"b:"+b);
+					Color color = new Color(red, g, b);
+					image.setRGB(c, r, color.getRGB());
 	
-	   		}
-	   	}
+				}
+			}	
 	   	
-		  JFrame frame = new JFrame();
-		  JPanel panel = new JPanel();
-		  JLabel label = new JLabel();
+			JFrame frame = new JFrame();
+			JPanel panel = new JPanel();
+			JLabel label = new JLabel();
 		  
-		  panel.add(label);
-		  ImageIcon imageIcon = new ImageIcon(image);
-		  Image image1 = imageIcon.getImage(); // transform it 
-		  Image newimg = image1.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		  imageIcon = new ImageIcon(newimg);
-		  label.setIcon(imageIcon);
+			panel.add(label);
+			ImageIcon imageIcon = new ImageIcon(image);
+			Image image1 = imageIcon.getImage(); // transform it 
+			Image newimg = image1.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+			imageIcon = new ImageIcon(newimg);
+			label.setIcon(imageIcon);
 		  
-		  frame.add(panel);
-		  frame.setSize(300,300);
-		  frame.setVisible(true);
-		  frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			frame.add(panel);
+			frame.setSize(300,300);
+			frame.setVisible(true);
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		}
 	}
 	

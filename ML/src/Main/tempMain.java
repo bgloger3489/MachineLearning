@@ -112,7 +112,7 @@ public class tempMain {
 		//------------------< SETTING UP >--------------------
 			p("SETTING UP:\n");
 				
-			double[][] temp = {{.001}};
+			double[][] temp = {{.01}};
 			LEARNING_RATE = new Matrix(temp);
 			
 			EMERGENCY_LENGTH = pictureArray.length;
@@ -175,6 +175,17 @@ public class tempMain {
 			z5.printShape();
 			prarr(z5.matrix.vals);
 			
+			/*Node nn1 = new Exponent(m1, 2);
+			Tensor zz1 = new Tensor(nn1);
+			
+			int[][] invalid = {{-1}};
+			Node nn2 = new Sigma (new Tensor(zz1.matrix.T()), invalid);
+			Tensor zz2 = new Tensor(nn2);
+
+			Node nn3 = new Sigma (new Tensor(zz1.matrix.T()), invalid);
+			Tensor zz3 = new Tensor(nn3);*/
+			
+			
 			p("z5.components");
 			prarr(z5.components(m1).vals);
 			
@@ -183,6 +194,11 @@ public class tempMain {
 			p("m1");
 			m1.printShape();
 			prarr(m1.matrix.vals);
+			
+			
+			
+			
+			
 			
 		Tensor[] tenArr = {z1,z3,z4,z5};
 
