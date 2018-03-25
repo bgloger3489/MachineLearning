@@ -60,12 +60,14 @@ public class Matrix {
 	
 	public static Matrix raisePowerMatrix(Matrix m1, double power) {
 		//m1.getShape() is [length][1]
-		double[][] temp = new double[m1.vals.length][1];
+		double[][] temp = new double[m1.vals.length][m1.vals[0].length];
 		
 		for(int i = 0;  i < m1.vals.length; i++) {
-			temp[i][0] = java.lang.Math.pow((m1.vals[i][0]), power);
-		}
+			for(int j = 0; j < m1.vals[0].length; j++) {
+				temp[i][j] = java.lang.Math.pow((m1.vals[i][j]), power);
 		
+			}
+		}
 		return new Matrix(temp);
 	}
 	

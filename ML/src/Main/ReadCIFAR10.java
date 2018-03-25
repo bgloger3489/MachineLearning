@@ -19,7 +19,7 @@ public class ReadCIFAR10 {
 	
 
 	public static void main(String[] args) throws IOException {
-		FileInputStream inputStream = new FileInputStream("C:\\Users\\BT_1N3_11\\Desktop\\cifar-10-batches-bin\\data_batch_1.bin");
+		FileInputStream inputStream = new FileInputStream("/Users/Ben/Desktop/cifar-10-batches-bin/data_batch_1.bin");//"C:\\Users\\BT_1N3_11\\Desktop\\cifar-10-batches-bin\\data_batch_1.bin"
 		
 		int desiredImage = 10000-5;
 		
@@ -132,7 +132,7 @@ public class ReadCIFAR10 {
 		
 		for(int i = 0; i < numPictures; i++) {
 			for(int j = 0; j < 3072; j++) {
-				pictureArray[i][j] = b[1+ i*(3072 + 1) + j]  & 0xFF;
+				pictureArray[i][j] = Math.tanh(b[1+ i*(3072 + 1) + j]  & 0xFF);
 			}
 		}
 		

@@ -71,7 +71,7 @@ public class Tensor {
 		}if(this != goal && this.creator == null){
 			return null;
 		}if(this == goal && this.creator == null){
-			System.out.println("FOR ADD");
+			//System.out.println("FOR ADD");
 			return Matrix.ones(this.matrix.vals.length, this.matrix.vals[0].length);
 		}else {
 			System.out.println("check Tensor compeonents");

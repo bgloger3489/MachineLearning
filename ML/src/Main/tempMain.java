@@ -51,6 +51,9 @@ public class tempMain {
 		Node n2 = new Sigma(z1,temp);
 		Tensor z2 = new Tensor(n2);
 		
+		p("z1");
+		z1.printShape();
+		prarr(z1.matrix.vals);
 		
 		p("\n\nz2.components");
 		prarr(z2.components(m1).vals);
@@ -164,7 +167,7 @@ public class tempMain {
 		//------------------< SETTING UP >--------------------
 			p("SETTING UP:\n");
 				
-			double[][] temp = {{.01}};
+			double[][] temp = {{.1}};
 			LEARNING_RATE = new Matrix(temp);
 			
 			EMERGENCY_LENGTH = pictureArray.length;
@@ -239,10 +242,14 @@ public class tempMain {
 			Node n6 = new Add(z5,zz2);
 			Tensor z6 = new Tensor(n6);
 			
+			p("zz2.components");
+			zz2.components(m1).printShape();
 			
+			p("z5.components");
+			z5.components(m1).printShape();
 			
-			p("z6.components");
-			prarr(z6.components(m1).vals);
+			p("z6.shape");
+			z6.printShape();
 			
 			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z6.components(m1), LEARNING_RATE));
 		
@@ -257,7 +264,7 @@ public class tempMain {
 			
 		Tensor[] tenArr = {z1,z3,z4,z5,zz1,zz2,z6};
 
-		for(int i = 1; i < 1/*NUM_PICTURES -1*/; i++) {
+		for(int i = 1; i < NUM_PICTURES -1; i++) {
 			System.out.println("Type"+i + "Yi: "+ Yi[0][0]);
 			
 			m1.matrix = Matrix.subMatrix(m1.matrix, Matrix.multScalar(z6.components(m1), LEARNING_RATE));
@@ -292,7 +299,7 @@ public class tempMain {
 		System.out.println("________________________________");
 		System.out.println("Guess: "+ idx + " Correct: " + Yi[0][0]);
 		prarr(z1.matrix.vals);
-		//ReadCIFAR10.createImage(m1.matrix.vals);
+		ReadCIFAR10.createImage(m1.matrix.vals);
 	}
 	
 	
