@@ -8,7 +8,7 @@ Things to Note:
   1. I began my project, doing a simple line-of-best-fit regression on a scatter plot (ax+b and ax^2+bx+c) using X-Charts to animate it. I then expanded this into matrix math.
   2. I wanted the design to be dynamic: by putting together the different 'nodes' any kind of regressable-model can be created.
   3. In the end I trained a fully connected Nueral Network on CIFAR-10, and got some pretty interesting results:
-    - My model was 20% accurate. Not terribly impressive, BUT BETTER THAN RANDOM!!!!!
+    \n- My model was 20% accurate. Not terribly impressive, BUT BETTER THAN RANDOM!!!!!
     - A visualization of the different classifications is attached
     
 Overall, it was a really fun and rewarding experience. More than just a computer science project, I learned about matrix math and multivariable calculus, but also gained really valuable skills in self-education.
